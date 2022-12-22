@@ -26,7 +26,7 @@ feedback_pin = 14
 ###############################################################################
 # Global variables
 
-myParallax = parallax.Parallax(control_pin, feedback_pin)
+# myParallax = parallax.Parallax(control_pin, feedback_pin)
 
 ###############################################################################
 # Global methods
@@ -39,6 +39,13 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 # Main program
 
 if __name__ == '__main__':
+
+    GPIO.setup(control_pin, GPIO.OUT)
+    GPIO.setup(feedback_pin, GPIO.IN)
+
+    __servo = GPIO.PWM(control_pin, 100) 
+    __servo.start(50)
+
     while True:
-        myParallax.run()
+        # myParallax.run()
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
