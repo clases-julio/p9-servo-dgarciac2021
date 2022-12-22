@@ -58,7 +58,6 @@ class Parallax:
     def __calculateDutyCycle(self, pulseWidth):
         print(pulseWidth)
         print(self.__PWM_PERIOD * 10 ** 6)
-        print(self.__calculateDutyCycle(self.__MAX_CCW_PW))
         return (pulseWidth/self.__PWM_PERIOD * 10 ** 6) * 100.0
 
     
