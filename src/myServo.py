@@ -45,4 +45,8 @@ if __name__ == '__main__':
     myParallax.run()
 
     while True:
+        for i in range(0, 101):
+            myParallax.power = i
+            myParallax.run()
+            time.sleep(1)
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
