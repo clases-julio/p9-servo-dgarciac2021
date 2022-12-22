@@ -49,7 +49,7 @@ def parar ():
 print ("Dispositivo listo. Esperando órdenes (w = adelante, s = atrás, x = parar)...")
 
 while True:
-  char = leerOrden()
+  char = input()
 
   if char == "w":
     print("Adelante (" + char + ")")
