@@ -50,15 +50,14 @@ class Parallax:
         GPIO.setup(self.feedbackPin, GPIO.IN)
 
         self.__servo = GPIO.PWM(self.controlPin, self.__PWM_FREQUENCY) 
-        self.__servo.ChangeDutyCycle(0)
-    
+        self.__servo.start(0)
+
     def __del__(self):
-        self.__servo.ChangeDutyCycle(0)
+        self.__servo.stop()
     
     def __calculateDutyCycle(self, pulseWidth):
         return ((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0)
 
-    
     def __linearInterpolate(self):
         if(self.turnDirection is self.CLOCKWISE):
             max = self.__MAX_CW_PW
@@ -71,8 +70,7 @@ class Parallax:
         self.rotationDirection = rotationDir
 
     def run(self):
-        print(self.__calculateDutyCycle(self.__MAX_CCW_PW))
-        self.__servo.ChangeDutyCycle(8.6)
-    
+        self.__servo.ChangeDutyCycle(self.__calculateDutyCycle(self.__MAX_CCW_PW))
+
     def stop(self):
         self.__servo.ChangeDutyCycle(0)
