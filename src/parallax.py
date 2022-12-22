@@ -18,11 +18,11 @@ import RPi.GPIO as GPIO
 ###############################################################################
 # Main program
 
-class Parallax(Enum):
-    CLOCKWISE = 0
-    COUNTER_CLOCKWISE = 1
-
 class Parallax:
+
+    class Parallax(Enum):
+        CLOCKWISE = 0
+        COUNTER_CLOCKWISE = 1
 
     __servo = pigpio.pi()
 
