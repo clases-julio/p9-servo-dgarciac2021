@@ -45,8 +45,8 @@ if __name__ == '__main__':
     GPIO.setup(control_pin, GPIO.OUT)
     GPIO.setup(feedback_pin, GPIO.IN)
 
-    __servo = GPIO.PWM(control_pin, 100) 
-    __servo.start(50)
+    __servo = GPIO.PWM(control_pin, 20) 
+    __servo.start(10)
 
     while True:
         # myParallax.run()
