@@ -71,6 +71,7 @@ class Parallax:
         self.rotationDirection = rotationDir
 
     def run(self):
+        print(self.__calculateDutyCycle(self.__MAX_CCW_PW))
         self.__servo.ChangeDutyCycle(self.__calculateDutyCycle(self.__MAX_CCW_PW))
     
     def stop(self):
