@@ -22,8 +22,8 @@ import parallax
 
 GPIO.setmode(GPIO.BCM)
 
-control_pin = 4
-feedback_pin = 14
+control_pin = 14
+feedback_pin = 4
 
 ###############################################################################
 # Global variables
