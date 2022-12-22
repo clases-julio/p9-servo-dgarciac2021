@@ -76,13 +76,13 @@ class Parallax:
         self.__servo.ChangeDutyCycle(self.calculateDutyCycle(self.calculatePulseWidth()))
 
     def calibrate(self):
-        for i in range (400, 2000, 10):
+        for i in range (0, 2000, 10):
             print("* -------------------- *")
             print("Pulse Width = ", i)
             print("Duty cycle = ", self.calculateDutyCycle(i))
             print("* -------------------- *")
             self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
-            time.sleep(2)
+            time.sleep(0.1)
 
     def stop(self):
         self.__servo.ChangeDutyCycle(0)
