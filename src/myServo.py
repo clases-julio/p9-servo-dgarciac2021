@@ -48,8 +48,8 @@ if __name__ == '__main__':
         for i in range(0, 101): 
             myParallax.power = i
             print("Power = ", myParallax.power)
-            print("Pulse Width = ", myParallax.__calculatePulseWidth())
-            print("Pulse Width = ", myParallax.__calculateDutyCycle())
+            print("Pulse Width = ", myParallax.calculatePulseWidth())
+            print("Pulse Width = ", myParallax.calculateDutyCycle())
             print("Power = ", myParallax.power)
             myParallax.run()
             time.sleep(1)
