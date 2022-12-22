@@ -12,7 +12,7 @@
 # Neccesary modules
 
 from enum import Enum
-import pigpio
+import sys, tty, termios, time, pigpio
 
 ###############################################################################
 # Main program
