@@ -38,7 +38,7 @@ class Parallax:
         self.speed = 0
 
         GPIO.setup(self.controlPin, GPIO.OUT)
-        GPIO.setup(self.feedbackPin, GPIO.INPUT)
+        GPIO.setup(self.feedbackPin, GPIO.IN)
 
         GPIO.output(self.controlPin, GPIO.LOW)
 
