@@ -51,7 +51,6 @@ if __name__ == '__main__':
             print("Power = ", myParallax.power)
             print("Pulse Width = ", myParallax.calculatePulseWidth())
             print("Duty cycle = ", myParallax.calculateDutyCycle(myParallax.calculatePulseWidth()))
-            print("Power = ", myParallax.power)
             print("* -------------------- *")
             myParallax.run()
             time.sleep(5)
