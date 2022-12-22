@@ -56,7 +56,7 @@ class Parallax:
         self.__servo.ChangeDutyCycle(0)
     
     def __calculateDutyCycle(self, pulseWidth):
-        return (pulseWidth/self.__PWM_PERIOD) * 100.0
+        return (pulseWidth/self.__PWM_PERIOD * 10 ** 6) * 100.0
 
     
     def __linearInterpolate(self):
