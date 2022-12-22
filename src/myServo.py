@@ -23,12 +23,12 @@ import parallax
 GPIO.setmode(GPIO.BCM)
 
 control_pin = 14
-feedback_pin = 4
+feedback_pin = 15
 
 ###############################################################################
 # Global variables
 
-# myParallax = parallax.Parallax(control_pin, feedback_pin)
+myParallax = parallax.Parallax(control_pin, feedback_pin)
 
 ###############################################################################
 # Global methods
@@ -42,16 +42,6 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 
 if __name__ == '__main__':
 
-    GPIO.setup(control_pin, GPIO.OUT)
-    GPIO.setup(feedback_pin, GPIO.IN)
-
-    __servo = GPIO.PWM(control_pin, 50) 
-    __servo.start(10)
-
     while True:
-        i = 8.6
-        __servo.ChangeDutyCycle(i)
-        print("Duty cycle: ", i)
-        time.sleep(1)
-        # myParallax.run()
+        myParallax.run()
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C

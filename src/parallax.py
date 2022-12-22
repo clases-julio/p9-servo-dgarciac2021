@@ -12,7 +12,7 @@
 # Neccesary modules
 
 from enum import Enum
-import sys, tty, termios, time, pigpio
+import time
 import RPi.GPIO as GPIO
 
 ###############################################################################
@@ -38,8 +38,8 @@ class Parallax:
         GPIO.setup(self.controlPin, GPIO.OUT)
         GPIO.setup(self.feedbackPin, GPIO.IN)
 
-        self.__servo = GPIO.PWM(self.controlPin, 100) 
-        self.__servo.start(50)
+        self.__servo = GPIO.PWM(self.controlPin, 50) 
+        self.__servo.start(0)
 
     def run(self):
-        self.__servo.ChangeDutyCycle(80)
+        self.__servo.ChangeDutyCycle(8.6)
