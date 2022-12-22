@@ -50,8 +50,7 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 # Main program
 
 if __name__ == '__main__':
-    print(myParallax.controlPin)
-    print(myParallax.feedbackPin)
+    myParallax.run()
     while True:
 
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
