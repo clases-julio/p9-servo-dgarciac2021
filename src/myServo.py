@@ -51,6 +51,7 @@ if __name__ == '__main__':
     while True:
         for i in range(0, 100):
             __servo.ChangeDutyCycle(i)
+            print("Duty cycle: ", i)
             time.sleep(1)
         # myParallax.run()
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
