@@ -38,8 +38,8 @@ class Parallax:
         GPIO.setup(self.controlPin, GPIO.OUT)
         GPIO.setup(self.feedbackPin, GPIO.IN)
 
-        self.__servo = GPIO.PWM(self.controlPin, 1720) 
-        self.__servo.start(1500)
+        self.__servo = GPIO.PWM(self.controlPin, 100) 
+        self.__servo.start(50)
 
     def run(self):
-        self.__servo.ChangeDutyCycle(1700)
+        self.__servo.ChangeDutyCycle(80)
