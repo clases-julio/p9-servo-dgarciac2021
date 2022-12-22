@@ -23,7 +23,7 @@ class TurnDirection(Enum):
 
 class Parallax:
 
-    self._servo = pigpio.pi()
+    self.servo = pigpio.pi()
 
     def __init__(self, cPin, fPin):
         self.controlPin = cPin
@@ -32,4 +32,4 @@ class Parallax:
         self.speed = 0
 
     def run():
-        self._servo.miServo.set_servo_pulsewidth(self.controlPin, 1720)
+        self.servo.miServo.set_servo_pulsewidth(self.controlPin, 1720)
