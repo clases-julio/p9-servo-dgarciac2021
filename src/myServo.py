@@ -47,10 +47,12 @@ if __name__ == '__main__':
     while True:
         for i in range(0, 101): 
             myParallax.power = i
+            print("* -------------------- *")
             print("Power = ", myParallax.power)
             print("Pulse Width = ", myParallax.calculatePulseWidth())
-            print("Pulse Width = ", myParallax.calculateDutyCycle(myParallax.calculatePulseWidth()))
+            print("Duty cycle = ", myParallax.calculateDutyCycle(myParallax.calculatePulseWidth()))
             print("Power = ", myParallax.power)
+            print("* -------------------- *")
             myParallax.run()
-            time.sleep(1)
+            time.sleep(5)
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
