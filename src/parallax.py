@@ -34,16 +34,16 @@ class Parallax:
     __MAX_ST_PW = 1520.0
     __MAX_CCW_PW = 1720.0
 
-    __MIN_CW_PW = 1479.0
+    __MIN_CW_PW = 1480.0
     __MIN_ST_PW = 1480.0
-    __MIN_CCW_PW = 1521.0
+    __MIN_CCW_PW = 1520.0
 
     def __init__(self, cPin, fPin):
         GPIO.setmode(GPIO.BCM)
 
         self.controlPin = cPin
         self.feedbackPin = fPin
-        self.turnDirection = self.CLOCKWISE
+        self.turnDirection = self.COUNTER_CLOCKWISE
         self.power = 0
 
         GPIO.setup(self.controlPin, GPIO.OUT)
@@ -66,7 +66,7 @@ class Parallax:
             max = self.__MAX_CCW_PW
             min = self.__MIN_CCW_PW
 
-        return (min + (((max - min) / 100.0) * self.power))
+        return round((min + (((max - min) / 100.0) * self.power)), 2)
 
 
     def setRotationDir(self, rotationDir):
