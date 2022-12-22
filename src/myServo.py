@@ -49,5 +49,7 @@ if __name__ == '__main__':
     __servo.start(10)
 
     while True:
+
+        __servo.ChangeDutyCycle(10)
         # myParallax.run()
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
