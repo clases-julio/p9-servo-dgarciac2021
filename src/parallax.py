@@ -72,7 +72,7 @@ class Parallax:
 
     def run(self):
         print(self.__calculateDutyCycle(self.__MAX_CCW_PW))
-        self.__servo.ChangeDutyCycle(self.__calculateDutyCycle(self.__MAX_CCW_PW))
+        self.__servo.ChangeDutyCycle(8.6)
     
     def stop(self):
         self.__servo.ChangeDutyCycle(0)
