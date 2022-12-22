@@ -20,6 +20,8 @@ import parallax
 ###############################################################################
 # Pinout management
 
+GPIO.setmode(GPIO.BCM)
+
 control_pin = 4
 feedback_pin = 14
 
