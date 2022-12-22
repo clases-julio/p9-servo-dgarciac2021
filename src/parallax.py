@@ -32,4 +32,4 @@ class Parallax:
         self.speed = 0
 
     def run(self):
-        self._servo.miServo.set_servo_pulsewidth(self.controlPin, 1720)
+        self._servo.set_servo_pulsewidth(self.controlPin, 1720)
