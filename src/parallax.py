@@ -27,16 +27,16 @@ class Parallax:
     CLOCKWISE = __DirOfRot.CLOCKWISE
     COUNTER_CLOCKWISE = __DirOfRot.COUNTER_CLOCKWISE
 
-    __PWM_FREQUENCY = 50
+    __PWM_FREQUENCY = 50.0
     __PWM_PERIOD = 1/__PWM_FREQUENCY
 
-    __MAX_CW_PW = 1280
-    __MAX_ST_PW = 1520
-    __MAX_CCW_PW = 1720
+    __MAX_CW_PW = 1280.0
+    __MAX_ST_PW = 1520.0
+    __MAX_CCW_PW = 1720.0
 
-    __MIN_CW_PW = 1479
-    __MIN_ST_PW = 1480
-    __MIN_CCW_PW = 1521
+    __MIN_CW_PW = 1479.0
+    __MIN_ST_PW = 1480.0
+    __MIN_CCW_PW = 1521.0
 
     def __init__(self, cPin, fPin):
         GPIO.setmode(GPIO.BCM)
@@ -56,9 +56,7 @@ class Parallax:
         self.__servo.ChangeDutyCycle(0)
     
     def __calculateDutyCycle(self, pulseWidth):
-        print(pulseWidth)
-        print(self.__PWM_PERIOD * 10 ** 6)
-        return (pulseWidth/self.__PWM_PERIOD * 10 ** 6) * 100.0
+        return ((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0)
 
     
     def __linearInterpolate(self):
