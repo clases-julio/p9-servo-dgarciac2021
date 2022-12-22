@@ -27,8 +27,6 @@ class Parallax:
     CLOCKWISE = DirOfRot.CLOCKWISE
     COUNTER_CLOCKWISE = DirOfRot.COUNTER_CLOCKWISE
 
-    __servo = pigpio.pi()
-
     def __init__(self, cPin, fPin):
         GPIO.setmode(GPIO.BCM)
 
@@ -40,7 +38,8 @@ class Parallax:
         GPIO.setup(self.controlPin, GPIO.OUT)
         GPIO.setup(self.feedbackPin, GPIO.IN)
 
-        GPIO.output(self.controlPin, GPIO.LOW)
+        self.__servo = GPIO.PWM(self.controlPin, 1720) 
+        self.__servo.start(1500)
 
     def run(self):
-        self.__servo.set_servo_pulsewidth(self.controlPin, 1600)
+        self.__servo.ChangeDutyCycle(1700)
