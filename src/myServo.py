@@ -20,19 +20,8 @@ import parallax
 ###############################################################################
 # Pinout management
 
-GPIO.setmode(GPIO.BCM)
-
 control_pin = 4
 feedback_pin = 14
-
-GPIO.setup(control_pin, GPIO.OUT)
-GPIO.setup(feedback_pin, GPIO.OUT)
-
-###############################################################################
-# Pinout initialization
-
-GPIO.output(control_pin, GPIO.LOW)
-GPIO.output(feedback_pin, GPIO.LOW)
 
 ###############################################################################
 # Global variables
