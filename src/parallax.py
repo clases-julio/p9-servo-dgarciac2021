@@ -12,6 +12,7 @@
 # Neccesary modules
 
 from enum import Enum
+import pigpio
 
 ###############################################################################
 # Main program
@@ -22,8 +23,13 @@ class TurnDirection(Enum):
 
 class Parallax:
 
+    self._servo = pigpio.pi()
+
     def __init__(self, cPin, fPin):
         self.controlPin = cPin
         self.feedbackPin = fPin
         self.turnDirection = TurnDirection.CLOCKWISE
         self.speed = 0
+
+    def run():
+        self._servo.miServo.set_servo_pulsewidth(self.controlPin, 1720)
