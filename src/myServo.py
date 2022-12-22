@@ -53,5 +53,5 @@ if __name__ == '__main__':
             print("Duty cycle = ", myParallax.calculateDutyCycle(myParallax.calculatePulseWidth()))
             print("* -------------------- *")
             myParallax.run()
-            time.sleep(5)
+            time.sleep(0.5)
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
