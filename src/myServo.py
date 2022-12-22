@@ -45,11 +45,12 @@ if __name__ == '__main__':
     GPIO.setup(control_pin, GPIO.OUT)
     GPIO.setup(feedback_pin, GPIO.IN)
 
-    __servo = GPIO.PWM(control_pin, 20) 
+    __servo = GPIO.PWM(control_pin, 50) 
     __servo.start(10)
 
     while True:
-
-        __servo.ChangeDutyCycle(10)
+        for i in range(0, 100):
+            __servo.ChangeDutyCycle(i)
+            time.sleep(1)
         # myParallax.run()
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
