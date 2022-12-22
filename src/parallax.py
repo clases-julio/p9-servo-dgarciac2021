@@ -43,7 +43,7 @@ class Parallax:
 
         self.controlPin = cPin
         self.feedbackPin = fPin
-        self.turnDirection = self.COUNTER_CLOCKWISE
+        self.turnDirection = self.CLOCKWISE
         self.power = 0
 
         GPIO.setup(self.controlPin, GPIO.OUT)
