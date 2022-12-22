@@ -55,10 +55,10 @@ class Parallax:
     def __del__(self):
         self.__servo.stop()
     
-    def __calculateDutyCycle(self, pulseWidth):
+    def calculateDutyCycle(self, pulseWidth):
         return ((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0)
 
-    def __calculatePulseWidth(self):
+    def calculatePulseWidth(self):
         if(self.turnDirection is self.CLOCKWISE):
             max = self.__MAX_CW_PW
             min = self.__MIN_CW_PW
@@ -73,7 +73,7 @@ class Parallax:
         self.rotationDirection = rotationDir
 
     def run(self):
-        self.__servo.ChangeDutyCycle(self.__calculateDutyCycle(self.__calculatePulseWidth()))
+        self.__servo.ChangeDutyCycle(self.calculateDutyCycle(self.calculatePulseWidth()))
 
     def stop(self):
         self.__servo.ChangeDutyCycle(0)
