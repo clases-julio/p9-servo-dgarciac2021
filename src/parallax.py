@@ -20,9 +20,12 @@ import RPi.GPIO as GPIO
 
 class Parallax:
 
-    class Parallax(Enum):
+    class DirOfRot(Enum):
         CLOCKWISE = 0
         COUNTER_CLOCKWISE = 1
+
+    CLOCKWISE = DirOfRot.CLOCKWISE
+    COUNTER_CLOCKWISE = DirOfRot.COUNTER_CLOCKWISE
 
     __servo = pigpio.pi()
 
@@ -31,7 +34,7 @@ class Parallax:
 
         self.controlPin = cPin
         self.feedbackPin = fPin
-        self.turnDirection = Parallax.CLOCKWISE
+        self.turnDirection = self.CLOCKWISE
         self.speed = 0
 
         GPIO.setup(self.controlPin, GPIO.OUT)
