@@ -34,9 +34,9 @@ class Parallax:
     __MAX_ST_PW = 1520.0
     __MAX_CCW_PW = 1720.0
 
-    __MIN_CW_PW = 1480.0
+    __MIN_CW_PW = 1396.0
     __MIN_ST_PW = 1480.0
-    __MIN_CCW_PW = 1520.0
+    __MIN_CCW_PW = 1448.0
 
     def __init__(self, cPin, fPin):
         GPIO.setmode(GPIO.BCM)
