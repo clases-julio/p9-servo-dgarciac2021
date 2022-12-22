@@ -56,7 +56,7 @@ class Parallax:
         self.__servo.stop()
     
     def calculateDutyCycle(self, pulseWidth):
-        return ((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0)
+        return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
 
     def calculatePulseWidth(self):
         if(self.turnDirection is self.CLOCKWISE):
