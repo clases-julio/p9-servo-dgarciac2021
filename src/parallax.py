@@ -66,14 +66,14 @@ class Parallax:
             max = self.__MAX_CCW_PW
             min = self.__MIN_CCW_PW
 
-        return min + ((max - min) / (100.0 - 0.0)) * (self.power - 0.0)
+        return (min + (((max - min) / 100.0) * self.power))
 
 
     def setRotationDir(self, rotationDir):
         self.rotationDirection = rotationDir
 
     def run(self):
-        self.__servo.ChangeDutyCycle(self.__calculateDutyCycle(self.__calculatePulseWidth))
+        self.__servo.ChangeDutyCycle(self.__calculateDutyCycle(self.__calculatePulseWidth()))
 
     def stop(self):
         self.__servo.ChangeDutyCycle(0)
