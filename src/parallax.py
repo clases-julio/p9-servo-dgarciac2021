@@ -81,7 +81,7 @@ class Parallax:
             print("Pulse Width = ", i)
             print("Duty cycle = ", self.calculateDutyCycle(i))
             print("* -------------------- *")
-            self.__servo.ChangeDutyCycle(self.calculateDutyCycle())
+            self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
             time.sleep(2)
 
     def stop(self):
