@@ -40,5 +40,5 @@ if __name__ == '__main__':
     myParallax.run()
 
     while True:
-        print(myParallax.pi.get_PWM_dutycycle(feedback_pin))
+        print(myParallax.__pi.get_PWM_dutycycle(feedback_pin))
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
