@@ -31,7 +31,7 @@ myParallax = parallax.Parallax(control_pin, feedback_pin)
 # Global methods
 
 def callbackExit(signal, frame): # signal and frame when the interrupt was executed.
-    myParallax.destroy()
+    #myParallax.destroy()
     sys.exit(0)
 
 ###############################################################################
