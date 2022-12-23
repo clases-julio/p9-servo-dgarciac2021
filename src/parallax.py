@@ -84,7 +84,7 @@ class Parallax:
         return round(self.__feedbackReader.duty_cycle(), 2)
 
     def calibrate(self):
-        __STEP = 10
+        __STEP = 1
         __PPIO_MIN_PW = self.__MAX_CW_PW * 0.95
         __PPIO_MAX_PW = self.__MAX_CCW_PW * 1.05
         __PW = __PPIO_MIN_PW
