@@ -85,8 +85,8 @@ class Parallax:
 
     def calibrate(self):
         __STEP = 10
-        __PPIO_MIN_PW = 500
-        __PPIO_MAX_PW = 2500
+        __PPIO_MIN_PW = self.__MAX_CW_PW
+        __PPIO_MAX_PW = self.__MAX_CCW_PW
         __PW = __PPIO_MIN_PW
         
         __INCREASE_RATE = 0.5
@@ -107,7 +107,7 @@ class Parallax:
                 __timeMilestone = time.time()
                 __PW += __STEP
         
-        print("Elapsed time: ", time.time() - __startTimestamp)
+        print("Elapsed time: ", round(time.time() - __startTimestamp, 2), "s")
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
