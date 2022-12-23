@@ -49,7 +49,7 @@ class Parallax:
 
     def __del__(self):
         self.stop()
-        self.__pi.stop()
+        #self.__pi.stop()
     
     # def calculateDutyCycle(self, pulseWidth):
     #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
