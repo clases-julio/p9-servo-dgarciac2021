@@ -74,7 +74,7 @@ class Parallax:
         self.rotationDirection = rotationDir
 
     def run(self):
-        self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculateDutyCycle(self.__calculatePulseWidth()))
+        self.__pi.set_servo_pulsewidth(self.controlPin, 500) # self.__calculateDutyCycle(self.__calculatePulseWidth())
     
     def __getDutyCycle(self):
         return round(self.__feedbackReader.duty_cycle(), 2)
