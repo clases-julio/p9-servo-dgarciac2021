@@ -70,6 +70,9 @@ class Parallax:
 
     def run(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, self.__MAX_CCW_PW)
+    
+    def seePS(self):
+        print(self.__pi.get_PWM_dutycycle(self.feedbackPin))
 
     # def calibrate(self):
     #     for i in range (0, 5000, 10):
