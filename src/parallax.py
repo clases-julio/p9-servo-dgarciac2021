@@ -80,7 +80,7 @@ class Parallax:
     def run(self):
         for dc in range (500, 2501):
             self.__pi.set_servo_pulsewidth(self.controlPin, dc) # self.__calculateDutyCycle(self.__calculatePulseWidth())
-            print("Pulse width: ")
+            print("Pulse width: ", dc)
             time.sleep(1)
 
     def __getDutyCycle(self):
