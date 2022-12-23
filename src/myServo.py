@@ -43,6 +43,4 @@ if __name__ == '__main__':
     myParallax.run()
 
     while True:
-
-        myParallax.noexiste()
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
