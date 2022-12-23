@@ -13,14 +13,10 @@
 
 import signal
 import sys
-import RPi.GPIO as GPIO
-import time
 import parallax
 
 ###############################################################################
 # Pinout management
-
-GPIO.setmode(GPIO.BCM)
 
 control_pin = 14
 feedback_pin = 15

@@ -44,7 +44,7 @@ class Parallax:
         self.turnDirection = self.CLOCKWISE
         self.power = 0
 
-        self.__pi = pigio.pi()
+        self.__pi = pigpio.pi()
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
     def __del__(self):
