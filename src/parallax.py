@@ -49,6 +49,9 @@ class Parallax:
 
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
+    def __del__(self):
+        self.destroy()
+
     def destroy(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
         self.__feedbackReader.cancel()
