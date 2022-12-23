@@ -13,6 +13,7 @@
 
 import signal
 import sys
+import time
 import parallax
 
 ###############################################################################
@@ -41,4 +42,5 @@ if __name__ == '__main__':
 
     while True:
         myParallax.seePS()
+        time.sleep(2)
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
