@@ -85,14 +85,14 @@ class Parallax:
 
     def calibrate(self):
         __STEP = 10
-        __PPIO_MIN_PW = self.__MAX_CW_PW * 0.9
-        __PPIO_MAX_PW = self.__MAX_CCW_PW * 1.1
+        __PPIO_MIN_PW = self.__MAX_CW_PW * 0.95
+        __PPIO_MAX_PW = self.__MAX_CCW_PW * 1.05
         __PW = __PPIO_MIN_PW
         
         __INCREASE_RATE = 0.5
         __timeMilestone = time.time()
 
-        __expectedTime = (((__PPIO_MAX_PW - __PPIO_MIN_PW)/__STEP) * __INCREASE_RATE)
+        __expectedTime = round(((__PPIO_MAX_PW - __PPIO_MIN_PW)/__STEP) * __INCREASE_RATE, 2)
 
         print("Calibration procedure started!")
         print("Expected time: ", __expectedTime, "s")
