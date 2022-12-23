@@ -85,7 +85,7 @@ class Parallax:
 
     def calibrate(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 1450)
-        while self.__getDutyCycle() > 3.0: pass
+        while self.__getDutyCycle() > 3.0 and self.__getDutyCycle() is not 0.0 : pass
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
         print("Home!")
         time.sleep(60)
