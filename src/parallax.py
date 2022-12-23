@@ -43,13 +43,12 @@ class Parallax:
         self.controlPin = cPin
         self.feedbackPin = fPin
         self.turnDirection = self.CLOCKWISE
-        self.power = 0
 
         self.__pi = pigpio.pi()
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
     def __del__(self):
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+        self.stop()
         self.__pi.stop()
     
     # def calculateDutyCycle(self, pulseWidth):
