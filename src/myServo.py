@@ -14,7 +14,6 @@
 import signal
 import sys
 import parallax
-import RPi.GPIO as GPIO
 
 ###############################################################################
 # Pinout management
@@ -31,7 +30,6 @@ myParallax = parallax.Parallax(control_pin, feedback_pin)
 # Global methods
 
 def callbackExit(signal, frame): # signal and frame when the interrupt was executed.
-    GPIO.cleanup()
     sys.exit(0)
 
 ###############################################################################

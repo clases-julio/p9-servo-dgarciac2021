@@ -12,7 +12,6 @@
 # Neccesary modules
 
 from enum import Enum
-import RPi.GPIO as GPIO
 import time, pigpio, read_PWM
 
 ###############################################################################
@@ -51,9 +50,10 @@ class Parallax:
 
 
 
-    # def __del__(self):
+    def __del__(self):
     #     self.stop()
-    #     self.__pi.stop()
+        self.__feedbackReader.cancel()
+        self.__pi.stop()
     
     # def calculateDutyCycle(self, pulseWidth):
     #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
