@@ -12,8 +12,7 @@
 # Neccesary modules
 
 from enum import Enum
-import time
-import RPi.GPIO as GPIO
+import time, pigpio
 
 ###############################################################################
 # Main program
@@ -39,50 +38,46 @@ class Parallax:
     __MIN_CCW_PW = 1448.0
 
     def __init__(self, cPin, fPin):
-        GPIO.setmode(GPIO.BCM)
 
         self.controlPin = cPin
         self.feedbackPin = fPin
         self.turnDirection = self.CLOCKWISE
         self.power = 0
 
-        GPIO.setup(self.controlPin, GPIO.OUT)
-        GPIO.setup(self.feedbackPin, GPIO.IN)
-
-        self.__servo = GPIO.PWM(self.controlPin, self.__PWM_FREQUENCY) 
-        self.__servo.start(0)
+        self.__pi = pigio.pi()
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
     def __del__(self):
-        self.__servo.stop()
+        self.__pi.stop()
     
-    def calculateDutyCycle(self, pulseWidth):
-        return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
+    # def calculateDutyCycle(self, pulseWidth):
+    #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
 
-    def calculatePulseWidth(self):
-        if(self.turnDirection is self.CLOCKWISE):
-            max = self.__MAX_CW_PW
-            min = self.__MIN_CW_PW
-        if(self.turnDirection is self.COUNTER_CLOCKWISE):
-            max = self.__MAX_CCW_PW
-            min = self.__MIN_CCW_PW
+    # def calculatePulseWidth(self):
+    #     if(self.turnDirection is self.CLOCKWISE):
+    #         max = self.__MAX_CW_PW
+    #         min = self.__MIN_CW_PW
+    #     if(self.turnDirection is self.COUNTER_CLOCKWISE):
+    #         max = self.__MAX_CCW_PW
+    #         min = self.__MIN_CCW_PW
 
-        return round((min + (((max - min) / 100.0) * self.power)), 2)
+    #     return round((min + (((max - min) / 100.0) * self.power)), 2)
 
 
-    def setRotationDir(self, rotationDir):
-        self.rotationDirection = rotationDir
+    # def setRotationDir(self, rotationDir):
+    #     self.rotationDirection = rotationDir
 
     def run(self):
-        self.__servo.ChangeDutyCycle(self.calculateDutyCycle(self.calculatePulseWidth()))
+        self.__pi.set_servo_pulsewidth(self.controlPin, self.__MAX_CCW_PW)
 
-    def calibrate(self):
-        for i in range (0, 5000, 10):
-            print("* -------------------- *")
-            print("Pulse Width = ", i)
-            print("Duty cycle = ", self.calculateDutyCycle(i))
-            print("* -------------------- *")
-            self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
-            time.sleep(0.1)
+    # def calibrate(self):
+    #     for i in range (0, 5000, 10):
+    #         print("* -------------------- *")
+    #         print("Pulse Width = ", i)
+    #         print("Duty cycle = ", self.calculateDutyCycle(i))
+    #         print("* -------------------- *")
+    #         self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
+    #         time.sleep(0.1)
 
     def stop(self):
-        self.__servo.ChangeDutyCycle(0)
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
