@@ -88,6 +88,7 @@ class Parallax:
             print("* -------------------- *")
             print("Pulse Width = ", i)
             print("Duty cycle = ", self.__calculateDutyCycle(i))
+            print("Feedback duty cycle = ", self.__getDutyCycle())
             print("* -------------------- *")
             self.__pi.set_servo_pulsewidth(self.controlPin, i)
             time.sleep(0.1)
