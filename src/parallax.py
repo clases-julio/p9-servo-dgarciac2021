@@ -78,22 +78,19 @@ class Parallax:
         self.rotationDirection = rotationDir
 
     def run(self):
-        for dc in range (500, 2501):
-            self.__pi.set_servo_pulsewidth(self.controlPin, dc) # self.__calculateDutyCycle(self.__calculatePulseWidth())
-            print("Pulse width: ", dc)
-            time.sleep(0.01)
+        self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculateDutyCycle(self.__calculatePulseWidth()))
 
     def __getDutyCycle(self):
         return round(self.__feedbackReader.duty_cycle(), 2)
 
-    # def calibrate(self):
-    #     for i in range (0, 5000, 10):
-    #         print("* -------------------- *")
-    #         print("Pulse Width = ", i)
-    #         print("Duty cycle = ", self.calculateDutyCycle(i))
-    #         print("* -------------------- *")
-    #         self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
-    #         time.sleep(0.1)
+    def calibrate(self):
+        for i in range (500, 2500, 10):
+            print("* -------------------- *")
+            print("Pulse Width = ", i)
+            print("Duty cycle = ", self.__calculateDutyCycle(i))
+            print("* -------------------- *")
+            self.__pi.set_servo_pulsewidth(self.controlPin, i)
+            time.sleep(0.1)
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
