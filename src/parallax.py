@@ -48,12 +48,16 @@ class Parallax:
 
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
-
-
     def __del__(self):
     #     self.stop()
         self.__feedbackReader.cancel()
         self.__pi.stop()
+    
+    def destroy(self):
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+        self.__feedbackReader.cancel()
+        self.__pi.stop()
+        self.__del__()
     
     # def calculateDutyCycle(self, pulseWidth):
     #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
@@ -87,5 +91,5 @@ class Parallax:
     #         self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
     #         time.sleep(0.1)
 
-    # def stop(self):
-    #     self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+    def stop(self):
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
