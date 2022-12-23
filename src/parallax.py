@@ -49,7 +49,7 @@ class Parallax:
 
     def __del__(self):
         self.stop()
-        #self.__pi.stop()
+        self.__pi.stop()
     
     # def calculateDutyCycle(self, pulseWidth):
     #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
@@ -69,7 +69,7 @@ class Parallax:
     #     self.rotationDirection = rotationDir
 
     def run(self):
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+        self.__pi.set_servo_pulsewidth(self.controlPin, self.__MAX_CCW_PW)
 
     # def calibrate(self):
     #     for i in range (0, 5000, 10):
