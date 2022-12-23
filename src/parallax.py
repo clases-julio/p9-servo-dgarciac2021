@@ -104,10 +104,8 @@ class Parallax:
                 self.__pi.set_servo_pulsewidth(self.controlPin, __PW)
             
             if (time.time() - __timeMilestone >= __SAMPLE_TIME_PER_PW):
-                __porcentageCompleted = round((__PW * 100.0)/__PPIO_MAX_PW, 2)
-                if __porcentageCompleted is not 100.0: printEnd = "\r"
-                else: printEnd = "\n"
-                print("Completed: ", __porcentageCompleted, "%", end=printEnd)
+                __porcentageCompleted = round((__PW * 100.0)/(__PPIO_MAX_PW - __PPIO_MIN_PW), 2)
+                print("Completed: ", __porcentageCompleted, "%", end="\r")
                 __timeMilestone = time.time()
                 __PW += __PW_STEP
         
