@@ -92,12 +92,15 @@ class Parallax:
         __INCREASE_RATE = 0.5
         __timeMilestone = time.time()
 
+        __expectedTime = (((__PPIO_MAX_PW - __PPIO_MIN_PW)/__STEP) * __INCREASE_RATE)
+
+        print("Calibration procedure started!")
+        print("Expected time: ", __expectedTime, "s")
+
         __startTimestamp = time.time()
 
         while __PW <= __PPIO_MAX_PW:
             if __PW is not self.__pi.get_servo_pulsewidth(self.controlPin):
-                print("* PULSE WIDTH CHANGE *")
-                print("Current PW = ", __PW)
                 self.__pi.set_servo_pulsewidth(self.controlPin, __PW)
             
             if (time.time() - __timeMilestone >= __INCREASE_RATE):
