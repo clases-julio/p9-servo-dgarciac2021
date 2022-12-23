@@ -30,7 +30,6 @@ myParallax = parallax.Parallax(control_pin, feedback_pin)
 # Global methods
 
 def callbackExit(signal, frame): # signal and frame when the interrupt was executed.
-    GPIO.cleanup() # Clean GPIO resources before exit.
     sys.exit(0)
 
 ###############################################################################
