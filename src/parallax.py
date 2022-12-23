@@ -13,7 +13,7 @@
 
 from enum import Enum
 import RPi.GPIO as GPIO
-import time, pigpio
+import time, pigpio, read_PWM
 
 ###############################################################################
 # Main program
@@ -47,9 +47,13 @@ class Parallax:
         self.__pi = pigpio.pi()
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
-    def __del__(self):
-        #self.stop()
-        self.__pi.stop()
+        self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
+
+
+
+    # def __del__(self):
+    #     self.stop()
+    #     self.__pi.stop()
     
     # def calculateDutyCycle(self, pulseWidth):
     #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
@@ -72,7 +76,7 @@ class Parallax:
         self.__pi.set_servo_pulsewidth(self.controlPin, self.__MAX_CCW_PW)
     
     def seePS(self):
-        print(self.__pi.get_PWM_dutycycle(self.feedbackPin))
+        print(self.__feedbackReader.duty_cycle())
 
     # def calibrate(self):
     #     for i in range (0, 5000, 10):
@@ -83,5 +87,5 @@ class Parallax:
     #         self.__servo.ChangeDutyCycle(self.calculateDutyCycle(i))
     #         time.sleep(0.1)
 
-    def stop(self):
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+    # def stop(self):
+    #     self.__pi.set_servo_pulsewidth(self.controlPin, 0)
