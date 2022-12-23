@@ -84,6 +84,12 @@ class Parallax:
         return round(self.__feedbackReader.duty_cycle(), 2)
 
     def calibrate(self):
+        self.__pi.set_servo_pulsewidth(self.controlPin, 1450)
+        while self.__getDutyCycle() > 3.0: pass
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+        print("Home!")
+        time.sleep(60)
+
         for i in range (500, 2510, 10):
             self.__pi.set_servo_pulsewidth(self.controlPin, i)
             time.sleep(1)
