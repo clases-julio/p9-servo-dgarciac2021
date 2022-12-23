@@ -86,6 +86,7 @@ class Parallax:
     def calibrate(self):
         for i in range (500, 2510, 10):
             self.__pi.set_servo_pulsewidth(self.controlPin, i)
+            time.sleep(1)
             print("* -------------------- *")
             print("Pulse Width = ", i)
             print("Duty cycle = ", self.__calculateDutyCycle(i))
