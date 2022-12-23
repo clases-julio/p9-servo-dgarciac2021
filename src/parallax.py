@@ -50,7 +50,7 @@ class Parallax:
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
     def __del__(self):
-        print(self.__pi)
+        print(self.__pi.connected)
         if self.__pi:
             self.destroy()
 
