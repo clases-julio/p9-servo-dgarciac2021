@@ -84,7 +84,7 @@ class Parallax:
         return round(self.__feedbackReader.duty_cycle(), 2)
 
     def calibrate(self):
-        for i in range (500, 2500, 10):
+        for i in range (500, 2510, 10):
             print("* -------------------- *")
             print("Pulse Width = ", i)
             print("Duty cycle = ", self.__calculateDutyCycle(i))
