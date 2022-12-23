@@ -85,31 +85,20 @@ class Parallax:
 
     def calibrate(self):
         __PW_STEP = 10
-        __PPIO_MIN_PW = self.__MAX_CW_PW * 0.95
-        __PPIO_MAX_PW = self.__MAX_CCW_PW * 1.05
-        __PW = __PPIO_MIN_PW
+        __MIN_PW = self.__MAX_CW_PW - 100.0
+        __MAX_PW = self.__MAX_CCW_PW + 100.0
+        __PW = __MIN_PW
         
         __SAMPLE_TIME_PER_PW = 0.5
         __timeMilestone = time.time()
 
-        __expectedTime = round(((__PPIO_MAX_PW - __PPIO_MIN_PW)/__PW_STEP) * __SAMPLE_TIME_PER_PW, 2)
-
-        print("Calibration procedure started!")
-        print("Expected time: ", __expectedTime, "s")
-
-        __startTimestamp = time.time()
-
-        while __PW <= __PPIO_MAX_PW:
+        while __PW <= __MAX_PW:
             if __PW is not self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, __PW)
-            
+
             if (time.time() - __timeMilestone >= __SAMPLE_TIME_PER_PW):
-                __porcentageCompleted = round((__PW * 100.0)/(__PPIO_MAX_PW - __PPIO_MIN_PW), 2)
-                print("Completed: ", __porcentageCompleted, "%", end="\r")
                 __timeMilestone = time.time()
                 __PW += __PW_STEP
-        
-        print("Elapsed time: ", round(time.time() - __startTimestamp, 2), "s")
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
