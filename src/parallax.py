@@ -42,6 +42,7 @@ class Parallax:
         self.controlPin = cPin
         self.feedbackPin = fPin
         self.turnDirection = self.CLOCKWISE
+        self.__power = 0
 
         self.__pi = pigpio.pi()
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
@@ -53,28 +54,30 @@ class Parallax:
         self.__feedbackReader.cancel()
         self.__pi.stop()
     
-    # def calculateDutyCycle(self, pulseWidth):
-    #     return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
+    def __calculateDutyCycle(self, pulseWidth):
+        return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
 
-    # def calculatePulseWidth(self):
-    #     if(self.turnDirection is self.CLOCKWISE):
-    #         max = self.__MAX_CW_PW
-    #         min = self.__MIN_CW_PW
-    #     if(self.turnDirection is self.COUNTER_CLOCKWISE):
-    #         max = self.__MAX_CCW_PW
-    #         min = self.__MIN_CCW_PW
+    def __calculatePulseWidth(self):
+        if(self.turnDirection is self.CLOCKWISE):
+            max = self.__MAX_CW_PW
+            min = self.__MIN_CW_PW
+        if(self.turnDirection is self.COUNTER_CLOCKWISE):
+            max = self.__MAX_CCW_PW
+            min = self.__MIN_CCW_PW
 
-    #     return round((min + (((max - min) / 100.0) * self.power)), 2)
+        return round((min + (((max - min) / 100.0) * self.__power)), 2)
 
+    def setPower(self, power):
+        self.__power = power
 
-    # def setRotationDir(self, rotationDir):
-    #     self.rotationDirection = rotationDir
+    def setRotationDir(self, rotationDir):
+        self.rotationDirection = rotationDir
 
     def run(self):
-        self.__pi.set_servo_pulsewidth(self.controlPin, self.__MAX_CCW_PW)
+        self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculateDutyCycle(self.__calculatePulseWidth()))
     
-    def seePS(self):
-        print(self.__feedbackReader.duty_cycle())
+    def __getDutyCycle(self):
+        return round(self.__feedbackReader.duty_cycle(), 2)
 
     # def calibrate(self):
     #     for i in range (0, 5000, 10):
