@@ -48,7 +48,7 @@ class Parallax:
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
     def __del__(self):
-        self.stop()
+        #self.stop()
         self.__pi.stop()
     
     # def calculateDutyCycle(self, pulseWidth):
