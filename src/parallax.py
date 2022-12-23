@@ -88,6 +88,7 @@ class Parallax:
         time.sleep(0.1)
         while self.__getDutyCycle() > 3.5:
             print(self.__getDutyCycle())
+            exit(0)
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
         print("Home!")
         time.sleep(60)
