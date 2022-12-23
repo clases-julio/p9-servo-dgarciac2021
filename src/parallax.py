@@ -86,15 +86,21 @@ class Parallax:
     def calibrate(self):
         __STEP = 10
         __PPIO_MIN_PW = 500
-        __PPIO_MAX_PW = 2500 + __STEP
+        __PPIO_MAX_PW = 2500
+        __PW = __PPIO_MIN_PW
+        
+        __INCREASE_RATE = 0.5
+        __timeMilestone = time.time()
 
-        for PW in range (__PPIO_MIN_PW, __PPIO_MAX_PW, __STEP):
-            self.__pi.set_servo_pulsewidth(self.controlPin, PW)
-            time.sleep(1)
-            print("* -------------------- *")
-            print("Pulse Width = ", PW)
-            print("Feedback duty cycle = ", self.__getDutyCycle())
-            print("* -------------------- *")
+        while __PW <= __PPIO_MAX_PW:
+            if __PW is not self.__pi.get_servo_pulsewidth(self.controlPin):
+                self.__pi.set_servo_pulsewidth(self.controlPin, __PW)
+            
+            if (time.time() - __timeMilestone >= __INCREASE_RATE):
+                __timeMilestone = time.time()
+                __PW += __STEP
+                print("* PULSE WIDTH CHANGE *")
+                print("Current PW = ", __PW)
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
