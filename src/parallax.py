@@ -99,8 +99,7 @@ class Parallax:
         while pw <= max_pw:
             if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
-                while self.__pi.get_servo_pulsewidth(self.controlPin) != pw:
-                    continue
+                time.sleep(0.5)
 
             feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
             if feedback_sample is not None and feedback_sample != 0.0:
@@ -116,7 +115,7 @@ class Parallax:
                 time_milestone = time.time()
 
         for sample_list in feedback_samples:
-            print("Pulse width: ", sample_list[0], end="\t|\t")
+            print("Pulse width: ", sample_list[0], end="  |  ")
             print("Samples gathered: ", len(sample_list), end="\n")
 
 
