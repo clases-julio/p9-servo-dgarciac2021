@@ -96,7 +96,7 @@ class Parallax:
         
         time_milestone = time.time()
 
-        while time.time() - time_milestone < 10.0:
+        while time.time() - time_milestone < 20.0:
             feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
             if feedback_sample != 0.0:
                 if feedback_sample < 30.0 or feedback_sample > 80.0:
