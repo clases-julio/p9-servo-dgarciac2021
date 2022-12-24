@@ -105,13 +105,16 @@ class Parallax:
                 pulse_width_samples.append(feedback_sample)
 
             if (time.time() - time_milestone >= sample_time_per_pw):
-                time_milestone = time.time()
                 pulse_width_samples = [key for key, _group in itertools.groupby(pulse_width_samples)]
                 feedback_samples.append(pulse_width_samples)
+
                 pw += pw_step
                 pulse_width_samples = [pw]
 
-        print(feedback_samples[0])
+                time_milestone = time.time()
+
+        for sample_list in feedback_samples:
+            print("Pulse width: ", sample_list[0], ". Samples gathered: ", len(sample_list))
 
 
     def stop(self):
