@@ -109,7 +109,7 @@ class Parallax:
                 pw += pw_step
                 pulse_width_samples = [pw]
 
-        print(feedback_samples)
+        print(feedback_samples[0])
 
 
     def stop(self):
