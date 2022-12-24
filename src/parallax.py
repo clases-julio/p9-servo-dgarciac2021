@@ -106,6 +106,7 @@ class Parallax:
 
             if (time.time() - time_milestone >= sample_time_per_pw):
                 time_milestone = time.time()
+                pulse_width_samples = [key for key, _group in groupby(pulse_width_samples)]
                 feedback_samples.append(pulse_width_samples)
                 pw += pw_step
                 pulse_width_samples = [pw]
