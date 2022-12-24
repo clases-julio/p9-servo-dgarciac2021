@@ -99,6 +99,7 @@ class Parallax:
         while pw <= max_pw:
             if pw is not self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
+                print("Hello")
 
             feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
             if feedback_sample is not None and feedback_sample != 0.0:
