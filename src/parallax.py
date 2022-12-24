@@ -162,6 +162,8 @@ class Parallax:
                 pulse_width_samples = [pw]
 
                 time_milestone = time.time()
+            
+            print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw)), "%", end="\r")
 
         print("Pulse width boundaries found!", end="\n\n")
 
