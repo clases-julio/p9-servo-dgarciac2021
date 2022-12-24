@@ -120,7 +120,7 @@ class Parallax:
                 elif feedback_sample < min_dc:
                     min_dc = feedback_sample
 
-            print("Completed: ", round(((time.time() - time_milestone)*100)/test_timeout), "%", end="\r")
+            print("Completed: ", round(((time.time() - time_milestone)*100)/test_timeout, 1), "%", end="\r")
 
         print("Feedback signal analyzed!")
 
@@ -163,7 +163,7 @@ class Parallax:
 
                 time_milestone = time.time()
             
-            print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw)), "%", end="\r")
+            print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
 
         print("Pulse width boundaries found!", end="\n\n")
 
