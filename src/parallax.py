@@ -100,7 +100,7 @@ class Parallax:
             feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
             if feedback_sample != 0.0:
                 if feedback_sample < 30.0 or feedback_sample > 80.0:
-                    self.__pi.set_servo_pulsewidth(self.controlPin, 1450)
+                    self.__pi.set_servo_pulsewidth(self.controlPin, 1470)
                 else:
                     self.__pi.set_servo_pulsewidth(self.controlPin, pw)
                 if feedback_sample > max_dc:
