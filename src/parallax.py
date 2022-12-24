@@ -86,8 +86,8 @@ class Parallax:
 
     def getFeedbackDCBounds(self):
         pw = self.__MAX_CW_PW * 0.95
-        max_dc = None
-        min_dc = None
+        max_dc = 0.0
+        min_dc = 100.0
 
         if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
