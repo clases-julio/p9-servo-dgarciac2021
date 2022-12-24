@@ -119,7 +119,7 @@ class Parallax:
                     max_dc = feedback_sample
                 elif feedback_sample < min_dc:
                     min_dc = feedback_sample
-        
+        print("Completed: ", ((time.time() - time_milestone)*100)/test_timeout, "%", end="\r")
         print("Feedback signal analyzed!")
 
         return min_dc, max_dc
@@ -132,7 +132,7 @@ class Parallax:
         
         min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
 
-        print("Analyzing pulse witdh boundaries...")
+        print("Analyzing pulse width boundaries...")
 
         pw_step = 10
         min_pw = self.__MAX_CW_PW - 100.0
@@ -161,7 +161,7 @@ class Parallax:
 
                 time_milestone = time.time()
 
-        print("Pulse witdh boundaries found", end="\n\n")
+        print("Pulse width boundaries found!", end="\n\n")
 
         print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
