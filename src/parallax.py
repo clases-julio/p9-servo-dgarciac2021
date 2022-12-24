@@ -154,12 +154,12 @@ class Parallax:
                 time_milestone = time.time()
 
         print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
-        print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%")
+        print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
 
         for feedback_sample in feedback_samples:
             print("For", feedback_sample[0], "µs pulse width,", len(feedback_sample), "unique samples where taken.")
 
-        print("Calibration time:", round(time.time() - start_timestamp, 1), "s")
+        print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
