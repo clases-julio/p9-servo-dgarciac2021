@@ -118,6 +118,8 @@ class Parallax:
         for sample_list in feedback_samples:
             print("Pulse width: ", sample_list[0], end="  |  ")
             print("Samples gathered: ", len(sample_list), end="\n")
+            if sample_list[0] == 1500:
+                print(sample_list)
 
 
     def stop(self):
