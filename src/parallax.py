@@ -124,12 +124,12 @@ class Parallax:
         
         min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
 
-        pw_step = 10
+        pw_step = 5
         min_pw = self.__MAX_CW_PW - 100.0
         max_pw = self.__MAX_CCW_PW + 100.0
         pw = min_pw
         
-        sample_time_per_pw = 0.5
+        sample_time_per_pw = 1
         time_milestone = time.time()
 
         pulse_width_samples = [pw]
