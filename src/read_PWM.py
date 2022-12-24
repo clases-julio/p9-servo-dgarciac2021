@@ -90,7 +90,7 @@ class reader:
       """
       Returns the PWM duty cycle percentage.
       """
-      if self._high is not None:
+      if self._high is not None and self._period is not None:
          return 100.0 * self._high / self._period
       else:
          return 0.0
