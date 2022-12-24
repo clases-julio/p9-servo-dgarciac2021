@@ -84,7 +84,33 @@ class Parallax:
     def __getDutyCycle(self):
         return round(self.__feedbackReader.duty_cycle(), 2)
 
+    def getFeedbackDCBounds(self):
+        pw = self.__MAX_CW_PW * 0.95
+        max_dc = None
+        min_dc = None
+
+        if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
+                self.__pi.set_servo_pulsewidth(self.controlPin, pw)
+                while self.__pi.get_servo_pulsewidth(self.controlPin) != pw:
+                    continue
+        
+        time_milestone = time.time()
+
+        while time.time() - time_milestone < 10.0:
+            feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
+            if feedback_sample != 0.0:
+                if feedback_sample > max_dc:
+                    max_dc = feedback_sample
+                elif feedback_sample < min_dc:
+                    min_dc = feedback_sample
+        
+        print(min_dc, max_dc)
+        exit(0)
+
     def calibrate(self):
+        
+        self.getFeedbackDCBounds()
+
         pw_step = 10
         min_pw = self.__MAX_CW_PW - 100.0
         max_pw = self.__MAX_CCW_PW + 100.0
@@ -114,13 +140,6 @@ class Parallax:
                 pulse_width_samples = [pw]
 
                 time_milestone = time.time()
-
-        for sample_list in feedback_samples:
-            print("Pulse width: ", sample_list[0], end="  |  ")
-            print("Samples gathered: ", len(sample_list), end="\n")
-            if sample_list[0] == 1750 or sample_list[0] == 1500:
-                print(sample_list)
-
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
