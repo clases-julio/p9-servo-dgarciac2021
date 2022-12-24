@@ -84,21 +84,29 @@ class Parallax:
         return round(self.__feedbackReader.duty_cycle(), 2)
 
     def calibrate(self):
-        __PW_STEP = 10
-        __MIN_PW = self.__MAX_CW_PW - 100.0
-        __MAX_PW = self.__MAX_CCW_PW + 100.0
-        __PW = __MIN_PW
+        pw_step = 10
+        min_pw = self.__MAX_CW_PW - 100.0
+        max_pw = self.__MAX_CCW_PW + 100.0
+        pw = min_pw
         
-        __SAMPLE_TIME_PER_PW = 0.5
-        __timeMilestone = time.time()
+        sample_time_per_pw = 0.5
+        time_milestone = time.time()
 
-        while __PW <= __MAX_PW:
-            if __PW is not self.__pi.get_servo_pulsewidth(self.controlPin):
-                self.__pi.set_servo_pulsewidth(self.controlPin, __PW)
+        feedback_samples = [pw]
 
-            if (time.time() - __timeMilestone >= __SAMPLE_TIME_PER_PW):
-                __timeMilestone = time.time()
-                __PW += __PW_STEP
+        while pw <= max_pw:
+            if pw is not self.__pi.get_servo_pulsewidth(self.controlPin):
+                self.__pi.set_servo_pulsewidth(self.controlPin, pw)
+
+            feedback_samples.append(self.__feedbackReader.duty_cycle())
+
+            if (time.time() - time_milestone >= sample_time_per_pw):
+                time_milestone = time.time()
+                pw += pw_step
+                feedback_samples.append(pw)
+
+        print(feedback_samples)
+
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
