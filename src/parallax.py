@@ -99,6 +99,10 @@ class Parallax:
         while time.time() - time_milestone < 10.0:
             feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
             if feedback_sample != 0.0:
+                if feedback_sample < 5.0 or feedback_sample > 95.0:
+                    self.__pi.set_servo_pulsewidth(self.controlPin, 1450)
+                else:
+                    self.__pi.set_servo_pulsewidth(self.controlPin, pw)
                 if feedback_sample > max_dc:
                     max_dc = feedback_sample
                 elif feedback_sample < min_dc:
