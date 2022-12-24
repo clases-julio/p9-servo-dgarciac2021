@@ -100,6 +100,8 @@ class Parallax:
         min_dc = 100.0
         max_dc = 0.0
 
+        print("Analyzing feedback signal...")
+
         self.__run_and_wait(quick_pw)
 
         time_milestone = time.time()
@@ -118,13 +120,19 @@ class Parallax:
                 elif feedback_sample < min_dc:
                     min_dc = feedback_sample
         
+        print("Feedback signal analyzed!")
+
         return min_dc, max_dc
 
     def calibrate(self):
 
+        print("Starting calibration procedure...")
+
         start_timestamp = time.time()
         
         min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
+
+        print("Analyzing pulse witdh boundaries...")
 
         pw_step = 10
         min_pw = self.__MAX_CW_PW - 100.0
@@ -152,6 +160,8 @@ class Parallax:
                 pulse_width_samples = [pw]
 
                 time_milestone = time.time()
+
+        print("Pulse witdh boundaries found", end="\n\n")
 
         print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
