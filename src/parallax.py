@@ -116,7 +116,7 @@ class Parallax:
                 time_milestone = time.time()
 
         for sample_list in feedback_samples:
-            print("Pulse width: ", sample_list[0], end="\t")
+            print("Pulse width: ", sample_list[0], end="\t|\t")
             print("Samples gathered: ", len(sample_list), end="\n")
 
 
