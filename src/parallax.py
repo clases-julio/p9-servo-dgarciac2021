@@ -119,7 +119,9 @@ class Parallax:
                     max_dc = feedback_sample
                 elif feedback_sample < min_dc:
                     min_dc = feedback_sample
-        print("Completed: ", ((time.time() - time_milestone)*100)/test_timeout, "%", end="\r")
+
+            print("Completed: ", ((time.time() - time_milestone)*100)/test_timeout, "%", end="\r")
+
         print("Feedback signal analyzed!")
 
         return min_dc, max_dc
