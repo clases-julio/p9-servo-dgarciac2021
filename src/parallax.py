@@ -58,8 +58,8 @@ class Parallax:
         self.__feedbackReader.cancel()
         self.__pi.stop()
     
-    def __calculateDutyCycle(self, pulseWidth):
-        return round(((pulseWidth/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
+    def __calculateDutyCycle(self, pulse_width):
+        return round(((pulse_width/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
 
     def __calculatePulseWidth(self):
         if(self.turnDirection is self.CLOCKWISE):
@@ -74,8 +74,8 @@ class Parallax:
     def setPower(self, power):
         self.__power = power
 
-    def setRotationDir(self, rotationDir):
-        self.rotationDirection = rotationDir
+    def setRotationDir(self, rotation_dir):
+        self.rotationDirection = rotation_dir
 
     def run(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculateDutyCycle(self.__calculatePulseWidth()))
