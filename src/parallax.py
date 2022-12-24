@@ -85,25 +85,29 @@ class Parallax:
         return round(self.__feedbackReader.duty_cycle(), 2)
 
     def getFeedbackDCBounds(self):
-        pw = self.__MAX_CW_PW * 0.95
+        quick_pw = 1000
+        slow_pw = 1450
+        test_timeout = 30.0
+        lower_dc_bound = 30.0
+        upper_dc_bound = 80.0
         min_dc = 100.0
         max_dc = 0.0
 
 
-        if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
-                self.__pi.set_servo_pulsewidth(self.controlPin, pw)
-                while self.__pi.get_servo_pulsewidth(self.controlPin) != pw:
+        if quick_pw != self.__pi.get_servo_pulsewidth(self.controlPin):
+                self.__pi.set_servo_pulsewidth(self.controlPin, quick_pw)
+                while self.__pi.get_servo_pulsewidth(self.controlPin) != quick_pw:
                     continue
         
         time_milestone = time.time()
 
-        while time.time() - time_milestone < 20.0:
+        while time.time() - time_milestone < test_timeout:
             feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
             if feedback_sample != 0.0:
-                if feedback_sample < 30.0 or feedback_sample > 80.0:
-                    self.__pi.set_servo_pulsewidth(self.controlPin, 1465)
+                if feedback_sample < lower_dc_bound or upper_dc_bound > 80.0:
+                    self.__pi.set_servo_pulsewidth(self.controlPin, slow_pw)
                 else:
-                    self.__pi.set_servo_pulsewidth(self.controlPin, pw)
+                    self.__pi.set_servo_pulsewidth(self.controlPin, quick_pw)
                 if feedback_sample > max_dc:
                     max_dc = feedback_sample
                 elif feedback_sample < min_dc:
