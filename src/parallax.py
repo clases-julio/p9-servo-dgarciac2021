@@ -124,12 +124,12 @@ class Parallax:
         
         min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
 
-        pw_step = 5
+        pw_step = 10
         min_pw = self.__MAX_CW_PW - 100.0
         max_pw = self.__MAX_CCW_PW + 100.0
         pw = min_pw
         
-        sample_time_per_pw = 1
+        sample_time_per_pw = 0.5
         time_milestone = time.time()
 
         pulse_width_samples = [pw]
@@ -150,6 +150,12 @@ class Parallax:
                 pulse_width_samples = [pw]
 
                 time_milestone = time.time()
+        
+        print("Minimum DutyCycle readed: ", min_pw)
+        print("Maximum DutyCycle readed: ", max_pw)
+
+        for feedback_sample in feedback_samples:
+            print("For ", feedback_sample[0] "uS pulse width, ", len(feedback_sample), "where taken.")
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
