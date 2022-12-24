@@ -12,6 +12,7 @@
 # Neccesary modules
 
 from enum import Enum
+import itertools
 import time, pigpio, read_PWM
 
 ###############################################################################
@@ -100,11 +101,12 @@ class Parallax:
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
 
             feedback_sample = self.__feedbackReader.duty_cycle()
-            if feedback_sample is not None:
+            if feedback_sample is not None and feedback_sample is not 0.0:
                 pulse_width_samples.append(feedback_sample)
 
             if (time.time() - time_milestone >= sample_time_per_pw):
                 time_milestone = time.time()
+                pulse_width_samples = [key for key, _group in itertools.groupby(pulse_width_samples)]
                 feedback_samples.append(pulse_width_samples)
                 pw += pw_step
                 pulse_width_samples = [pw]
