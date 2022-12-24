@@ -151,11 +151,11 @@ class Parallax:
 
                 time_milestone = time.time()
         
-        print("Minimum DutyCycle readed: ", min_pw)
-        print("Maximum DutyCycle readed: ", max_pw)
+        print("Minimum DutyCycle readed: ", min_fb_dc)
+        print("Maximum DutyCycle readed: ", max_fb_dc)
 
         for feedback_sample in feedback_samples:
-            print("For ", feedback_sample[0], "uS pulse width, ", len(feedback_sample), "where taken.")
+            print("For", feedback_sample[0], "uS pulse width,", len(feedback_sample), "samples where taken.")
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
