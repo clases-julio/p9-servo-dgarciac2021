@@ -100,8 +100,8 @@ class Parallax:
             if pw is not self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
 
-            feedback_sample = self.__feedbackReader.duty_cycle()
-            if feedback_sample is not None and feedback_sample is not 0.0:
+            feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
+            if feedback_sample is not None and feedback_sample is 0.0:
                 pulse_width_samples.append(feedback_sample)
 
             if (time.time() - time_milestone >= sample_time_per_pw):
