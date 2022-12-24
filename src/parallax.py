@@ -155,7 +155,7 @@ class Parallax:
         print("Maximum DutyCycle readed: ", max_pw)
 
         for feedback_sample in feedback_samples:
-            print("For ", feedback_sample[0] "uS pulse width, ", len(feedback_sample), "where taken.")
+            print("For ", feedback_sample[0], "uS pulse width, ", len(feedback_sample), "where taken.")
 
     def stop(self):
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
