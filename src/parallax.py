@@ -158,9 +158,9 @@ class Parallax:
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     print(x1, x2)
                     try:
-                        if x2 > x1:
-                            pct1 = (max_dc - x2) * 100 / x2
-                            pct2 = (x1 - min_dc) * 100 / min_dc
+                        if x1 > x2:
+                            pct1 = (max_dc - x1) * 100 / x1
+                            pct2 = (x2 - min_dc) * 100 / min_dc
                             pct = pct1 + pct2
                         else:
                             pct = (x2 - x1) * 100 / x1
