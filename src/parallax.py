@@ -183,6 +183,9 @@ class Parallax:
             elif target == self.__MIN_CW_PW:
                 if slope == 0.0:
                     return pulse_width_used[slope_samples.index(slope) - 1]
+            elif target == self.__MIN_CCW_PW:
+                if slope > 0.0 and slope < 1.0:
+                    return pulse_width_used[slope_samples.index(slope)]
 
     def calibrate(self):
 
