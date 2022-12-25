@@ -14,7 +14,9 @@
 from enum import Enum
 import itertools
 import time, pigpio, read_PWM
+import matplotlib
 from matplotlib import pyplot as plt
+matplotlib.use('tkagg')
 
 ###############################################################################
 # Main program
