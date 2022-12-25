@@ -183,7 +183,10 @@ class Parallax:
 
         print("Analyzing pulse width boundaries...")
 
-        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*0.95, self.__MAX_CW_PW*1.05 )
+        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*0.975, self.__MAX_CW_PW*1.025)
+        self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*0.975, self.__MIN_CW_PW*1.025)
+        self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*0.975, self.__MIN_CCW_PW*1.025)
+        self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*0.975, self.__MAX_CW_PW*1.025)
 
         print("Pulse width boundaries found!", end="\n\n")
 
