@@ -142,7 +142,7 @@ class Parallax:
         pw = min_pw
         
         time_per_pw = 0.5
-        sample_interval = time_per_pw/10
+        sample_interval = time_per_pw/20
         pw_time_milestone = time.time()
         sample_time_milestone = time.time()
 
