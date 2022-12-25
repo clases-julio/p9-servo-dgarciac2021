@@ -188,9 +188,8 @@ class Parallax:
         print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
 
-        print(feedback_samples[8][1:])
-        print(time_samples[8][1:])
-        print(slope_samples[8][1:])
+        for slope in slope_samples:
+            print(sum(slope[1:]) / len(slope[1:]))
 
 
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
