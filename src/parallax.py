@@ -159,6 +159,7 @@ class Parallax:
                     print(x1, x2)
                     try:
                         if x1 > x2:
+                            print("Aye!")
                             pct1 = (max_dc - x1) * 100 / x1
                             pct2 = (x2 - min_dc) * 100 / min_dc
                             pct = pct1 + pct2
