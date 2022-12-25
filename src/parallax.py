@@ -130,8 +130,12 @@ class Parallax:
     
     def __find_duty_cycle_boundaries(self, target, lower_limit, upper_limit, min_dc = __MIN_FB_DC, max_dc = __MAX_FB_DC):
         pw_step = 1
-        min_pw = round(lower_limit)
-        max_pw = round(upper_limit)
+        if target == self.__MIN_CW_PW:
+            min_pw = round(lower_limit)
+            max_pw = round(upper_limit)
+        else:
+            min_pw = round(upper_limit)
+            max_pw = round(lower_limit)
         pw = min_pw
 
         time_per_pw = 0.5
