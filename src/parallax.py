@@ -125,7 +125,7 @@ class Parallax:
         return min_dc, max_dc
     
     def __find_duty_cycle_boundaries(self, lower_limit, upper_limit):
-        pw_step = 5
+        pw_step = 1
         min_pw = round(lower_limit)
         max_pw = round(upper_limit)
         pw = min_pw
@@ -165,11 +165,10 @@ class Parallax:
 
                 pw_time_milestone = time.time()
 
-                #print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
-
         for slope in slope_samples:
             index = slope_samples.index(slope)
             print(feedback_samples[index][0], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
+        print("*--------------------------------------------------*")
 
     def calibrate(self):
 
