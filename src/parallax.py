@@ -86,7 +86,6 @@ class Parallax:
         if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
                 while self.__pi.get_servo_pulsewidth(self.controlPin) != pw:
-                    print(self.__pi.get_servo_pulsewidth(self.controlPin), pw)
                     continue
 
 
@@ -127,8 +126,8 @@ class Parallax:
     
     def __find_duty_cycle_boundaries(self, lower_limit, upper_limit):
         pw_step = 5
-        min_pw = lower_limit
-        max_pw = upper_limit
+        min_pw = round(lower_limit)
+        max_pw = round(upper_limit)
         pw = min_pw
 
         time_per_pw = 0.5
@@ -142,7 +141,6 @@ class Parallax:
 
         while pw <= max_pw:
             self.__run_and_wait(pw)
-            print(pw)
 
             if (time.time() - sample_time_milestone >= sample_interval):
                 feedback_sample = self.__feedbackReader.duty_cycle()
