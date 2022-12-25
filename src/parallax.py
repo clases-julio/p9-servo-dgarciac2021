@@ -165,7 +165,7 @@ class Parallax:
 
                 pw_time_milestone = time.time()
 
-                print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
+                #print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
 
         for slope in slope_samples:
             index = slope_samples.index(slope)
@@ -188,7 +188,7 @@ class Parallax:
         self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor)
         self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor)
         self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*min_factor, self.__MIN_CCW_PW*max_factor)
-        self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CW_PW*max_factor)
+        self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CCW_PW*max_factor)
 
         print("Pulse width boundaries found!", end="\n\n")
 
