@@ -132,7 +132,7 @@ class Parallax:
 
         start_timestamp = time.time()
         
-        min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
+        #min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
 
         print("Analyzing pulse width boundaries...")
 
@@ -163,7 +163,7 @@ class Parallax:
 
 
             if (time.time() - pw_time_milestone >= time_per_pw):
-                pulse_width_samples = [key for key, _group in itertools.groupby(pulse_width_samples)]
+                #pulse_width_samples = [key for key, _group in itertools.groupby(pulse_width_samples)]
                 feedback_samples.append(pulse_width_samples)
                 time_samples.append(gathered_time_samples)
 
