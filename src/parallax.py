@@ -27,6 +27,9 @@ class Parallax:
     CLOCKWISE = __DirOfRot.CLOCKWISE
     COUNTER_CLOCKWISE = __DirOfRot.COUNTER_CLOCKWISE
 
+    __MIN_FB_DC = 2.9
+    __MAX_FB_DC = 97.1
+
     __PWM_FREQUENCY = 50
     __PWM_PERIOD = 1/__PWM_FREQUENCY
 
@@ -124,7 +127,7 @@ class Parallax:
 
         return min_dc, max_dc
     
-    def __find_duty_cycle_boundaries(self, lower_limit, upper_limit):
+    def __find_duty_cycle_boundaries(self, lower_limit, upper_limit, min_dc = __MIN_FB_DC, max_dc = __MAX_FB_DC):
         pw_step = 1
         min_pw = round(lower_limit)
         max_pw = round(upper_limit)
@@ -154,7 +157,12 @@ class Parallax:
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
-                        pct = round((x2 - x1) * 100 / x1, 2)
+                        if x2 > x1:
+                            pct1 = (max_dc - x2) * 100 / x2
+                            pct2 = (x1 - min_dc) * 100 / min_dc
+                            pct = pct1 + pct2
+                        else:
+                            pct = round((x2 - x1) * 100 / x1, 2)
                     except ZeroDivisionError:
                         pct = None
                     changes.append(pct)
