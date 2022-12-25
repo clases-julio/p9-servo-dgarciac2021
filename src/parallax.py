@@ -158,7 +158,7 @@ class Parallax:
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
-                        if math.isclose(x1, x2, abs_tol=0.75):
+                        if math.isclose(x1, x2, abs_tol=0.65):
                             pct = 0.0
                         elif x1 > x2:
                             pct1 = (max_dc - x1) * 100 / x1
@@ -198,7 +198,7 @@ class Parallax:
         max_factor = 1.0 + factor/100
         min_factor = 1.0 - factor/100
 
-        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor, min_fb_dc, max_fb_dc)
+        #self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor, min_fb_dc, max_fb_dc)
         self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor, min_fb_dc, max_fb_dc)
         #self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*min_factor, self.__MIN_CCW_PW*max_factor)
         #self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CCW_PW*max_factor)
