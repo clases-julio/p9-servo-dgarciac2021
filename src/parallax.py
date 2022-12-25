@@ -185,6 +185,8 @@ class Parallax:
         max_factor = factor/100 + 1.0
         min_factor = factor/100 - 1.0
 
+        print(max_factor, min_factor)
+
         self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor)
         self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor)
         self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*min_factor, self.__MIN_CCW_PW*max_factor)
