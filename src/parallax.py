@@ -130,8 +130,6 @@ class Parallax:
         max_pw = upper_limit
         pw = min_pw
 
-        print(min_pw, max_pw)
-
         time_per_pw = 0.5
         sample_interval = time_per_pw/20
         pw_time_milestone = time.time()
@@ -143,6 +141,7 @@ class Parallax:
 
         while pw <= max_pw:
             self.__run_and_wait(pw)
+            print(pw)
 
             if (time.time() - sample_time_milestone >= sample_interval):
                 feedback_sample = self.__feedbackReader.duty_cycle()
