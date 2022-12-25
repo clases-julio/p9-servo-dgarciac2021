@@ -169,7 +169,7 @@ class Parallax:
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
-                        pct = (x2 - x1) * 100 / x1
+                        pct = round((x2 - x1) * 100 / x1, 2)
                     except ZeroDivisionError:
                         pct = None
                     changes.append(pct)
