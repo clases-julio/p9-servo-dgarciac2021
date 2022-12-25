@@ -156,16 +156,17 @@ class Parallax:
                 feedback_samples.append(pulse_width_samples)
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
+                    print(x1, x2)
                     try:
                         if x2 > x1:
                             pct1 = (max_dc - x2) * 100 / x2
                             pct2 = (x1 - min_dc) * 100 / min_dc
                             pct = pct1 + pct2
                         else:
-                            pct = round((x2 - x1) * 100 / x1, 2)
+                            pct = (x2 - x1) * 100 / x1
                     except ZeroDivisionError:
                         pct = None
-                    changes.append(pct)
+                    changes.append(round(pct, 2))
                 pulse_width_used.append(pw)
                 slope_samples.append(changes)
                 pw += pw_step
