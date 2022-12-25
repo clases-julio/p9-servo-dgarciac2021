@@ -182,7 +182,8 @@ class Parallax:
 
         for feedback_sample in feedback_samples:
             print("For", feedback_sample[0], "µs pulse width,", len(feedback_sample), "unique samples where taken.")
-
+            if feedback_sample[0] == 1330.0:
+                print(feedback_sample)
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
 
     def stop(self):
