@@ -179,7 +179,7 @@ class Parallax:
 
         for slope in slope_samples:
             if target == self.__MAX_CW_PW:
-                print(slope)
+                print(pulse_width_used[slope_samples.index(slope)], ":", slope)
             elif target == self.__MIN_CW_PW:
                 if slope == 0.0:
                     return pulse_width_used[slope_samples.index(slope) - 1]
