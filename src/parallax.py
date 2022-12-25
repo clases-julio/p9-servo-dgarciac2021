@@ -48,7 +48,7 @@ class Parallax:
         self.__power = 0
 
         self.__pi = pigpio.pi()
-        self.__pi.set_servo_pulsewidth(self.controlPin, 1525)
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
@@ -184,8 +184,7 @@ class Parallax:
                 if slope == 0.0:
                     return pulse_width_used[slope_samples.index(slope) - 1]
             elif target == self.__MIN_CCW_PW:
-                if slope > 0.0 and slope < 1.0:
-                    return pulse_width_used[slope_samples.index(slope)]
+                print(pulse_width_used[slope_samples.index(slope)], ":", slope)
 
     def calibrate(self):
 
