@@ -96,7 +96,7 @@ class Parallax:
     def __getFeedbackDCBounds(self):
         quick_pw = 1000
         slow_pw = 1450
-        test_timeout = 15.0
+        test_timeout = 5.0
         lower_dc_bound = 30.0
         upper_dc_bound = 80.0
         min_dc = 100.0
@@ -204,7 +204,7 @@ class Parallax:
         min_factor = 1.0 - factor/100
 
         #self.__find_duty_cycle_boundaries(self.__MAX_CW_PW, self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor, min_fb_dc, max_fb_dc)
-        print(self.__find_duty_cycle_boundaries(self.__MIN_CW_PW, self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor, min_fb_dc, max_fb_dc))
+        #print(self.__find_duty_cycle_boundaries(self.__MIN_CW_PW, self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor, min_fb_dc, max_fb_dc))
         print(self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW, self.__MIN_CCW_PW*min_factor, self.__MIN_CCW_PW*max_factor))
         #self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CCW_PW*max_factor)
 
