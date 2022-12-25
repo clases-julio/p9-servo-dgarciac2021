@@ -157,13 +157,13 @@ class Parallax:
                 feedback_samples.append(pulse_width_samples)
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
-                    print(x1, x2)
                     try:
                         if math.isclose(x1, x2, abs_tol=0.5):
-                            print("Aye!")
-                            # pct1 = (max_dc - x1) * 100 / x1
-                            # pct2 = (x2 - min_dc) * 100 / min_dc
-                            # pct = pct1 + pct2
+                            pct = None
+                        elif x2 > x1:
+                            pct1 = (max_dc - x1) * 100 / x1
+                            pct2 = (x2 - min_dc) * 100 / min_dc
+                            pct = pct1 + pct2
                         else:
                             pct = (x2 - x1) * 100 / x1
                     except ZeroDivisionError:
