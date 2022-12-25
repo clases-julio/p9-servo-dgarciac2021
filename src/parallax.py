@@ -31,12 +31,10 @@ class Parallax:
     __PWM_PERIOD = 1/__PWM_FREQUENCY
 
     __MAX_CW_PW = 1280.0
-    __MAX_ST_PW = 1520.0
     __MAX_CCW_PW = 1720.0
 
-    __MIN_CW_PW = 1396.0
-    __MIN_ST_PW = 1480.0
-    __MIN_CCW_PW = 1448.0
+    __MIN_CW_PW = 1480.0
+    __MIN_CCW_PW = 1520.0
 
     def __init__(self, cPin, fPin):
 
@@ -183,10 +181,14 @@ class Parallax:
 
         print("Analyzing pulse width boundaries...")
 
-        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*0.975, self.__MAX_CW_PW*1.025)
-        self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*0.975, self.__MIN_CW_PW*1.025)
-        self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*0.975, self.__MIN_CCW_PW*1.025)
-        self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*0.975, self.__MAX_CW_PW*1.025)
+        factor = 2.0
+        max_factor = factor/100 + 1.0
+        min_factor = factor/100 - 1.0
+
+        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor)
+        self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor)
+        self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*min_factor, self.__MIN_CCW_PW*max_factor)
+        self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CW_PW*max_factor)
 
         print("Pulse width boundaries found!", end="\n\n")
 
