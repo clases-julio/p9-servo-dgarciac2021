@@ -175,7 +175,7 @@ class Parallax:
 
         for slope in slope_samples:
             index = slope_samples.index(slope)
-            print(pulse_width_used[index], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
+            print(pulse_width_used[index], ":", round(sum(slope) / len(slope), 2))
 
         print("*--------------------------------------------------*")
 
