@@ -175,7 +175,9 @@ class Parallax:
 
         for slope in slope_samples:
             index = slope_samples.index(slope)
+            print(feedback_samples[index])
             print(pulse_width_used[index], ":\n", slope) # round(sum(slope[1:]) / len(slope[1:]), 2)
+
         print("*--------------------------------------------------*")
 
     def calibrate(self):
