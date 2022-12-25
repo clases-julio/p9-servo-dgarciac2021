@@ -48,7 +48,7 @@ class Parallax:
         self.__power = 0
 
         self.__pi = pigpio.pi()
-        self.__pi.set_servo_pulsewidth(self.controlPin, 1469)
+        self.__pi.set_servo_pulsewidth(self.controlPin, 1470)
 
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
