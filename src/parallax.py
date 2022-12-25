@@ -136,7 +136,7 @@ class Parallax:
 
         print("Analyzing pulse width boundaries...")
 
-        pw_step = 10
+        pw_step = 5
         min_pw = self.__MAX_CW_PW - 100.0
         max_pw = self.__MAX_CCW_PW + 100.0
         pw = min_pw
