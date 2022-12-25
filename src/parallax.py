@@ -141,27 +141,37 @@ class Parallax:
         max_pw = self.__MAX_CCW_PW + 100.0
         pw = min_pw
         
-        sample_time_per_pw = 0.5
-        time_milestone = time.time()
+        time_per_pw = 0.5
+        sample_interval = time_per_pw/10
+        pw_time_milestone = time.time()
+        sample_time_milestone = time.time()
 
         pulse_width_samples = [pw]
+        gathered_time_samples = [time.time()]
+        time_samples = []
         feedback_samples = []
 
         while pw <= max_pw:
             self.__run_and_wait(pw)
 
-            feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
-            if feedback_sample != 0.0:
-                pulse_width_samples.append(feedback_sample)
+            if (time.time() - sample_time_milestone >= sample_interval):
+                feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
+                if feedback_sample != 0.0:
+                    pulse_width_samples.append(feedback_sample)
+                    gathered_time_samples.append(time.time())
+                sample_time_milestone = time.time()
 
-            if (time.time() - time_milestone >= sample_time_per_pw):
+
+            if (time.time() - pw_time_milestone >= time_per_pw):
                 pulse_width_samples = [key for key, _group in itertools.groupby(pulse_width_samples)]
                 feedback_samples.append(pulse_width_samples)
+                time_samples.append(gathered_time_samples)
 
                 pw += pw_step
                 pulse_width_samples = [pw]
+                gathered_time_samples = [time.time()]
 
-                time_milestone = time.time()
+                pw_time_milestone = time.time()
             
             print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
 
