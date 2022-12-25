@@ -14,9 +14,6 @@
 from enum import Enum
 import itertools
 import time, pigpio, read_PWM
-import matplotlib
-from matplotlib import pyplot as plt
-matplotlib.use('tkagg')
 
 ###############################################################################
 # Main program
@@ -153,6 +150,7 @@ class Parallax:
         gathered_time_samples = [time.time()]
         time_samples = []
         feedback_samples = []
+        slope_samples = []
 
         while pw <= max_pw:
             self.__run_and_wait(pw)
@@ -168,8 +166,15 @@ class Parallax:
             if (time.time() - pw_time_milestone >= time_per_pw):
                 feedback_samples.append(pulse_width_samples)
                 gathered_time_samples = [timestamp - gathered_time_samples[0] for timestamp in gathered_time_samples]
+                changes = []
+                for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
+                    try:
+                        pct = (x2 - x1) * 100 / x1
+                    except ZeroDivisionError:
+                        pct = None
+                    changes.append(pct)
                 time_samples.append(gathered_time_samples)
-
+                slope_samples.append(changes)
                 pw += pw_step
                 pulse_width_samples = [pw]
                 gathered_time_samples = [time.time()]
@@ -183,7 +188,10 @@ class Parallax:
         print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
 
-        plt.plot(time_samples[3][1:], feedback_samples[3][1:])
+        print(feedback_samples[0][1:])
+        print(time_samples[0][1:])
+        print(slope_samples[0])
+
 
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
 
