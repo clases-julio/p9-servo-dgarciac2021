@@ -160,7 +160,7 @@ class Parallax:
                     try:
                         if math.isclose(x1, x2, abs_tol=0.5):
                             pct = 0.0
-                        elif x2 > x1:
+                        elif x1 > x2:
                             pct1 = (max_dc - x1) * 100 / x1
                             pct2 = (x2 - min_dc) * 100 / min_dc
                             pct = pct1 + pct2
