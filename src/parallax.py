@@ -135,7 +135,8 @@ class Parallax:
         pw_time_milestone = time.time()
         sample_time_milestone = time.time()
 
-        pulse_width_samples = [pw]
+        pulse_width_samples = []
+        pulse_width_used = []
         feedback_samples = []
         slope_samples = []
 
@@ -150,7 +151,6 @@ class Parallax:
             
             if (time.time() - pw_time_milestone >= time_per_pw):
                 feedback_samples.append(pulse_width_samples)
-                pulse_width_samples.pop(0)
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
@@ -158,16 +158,16 @@ class Parallax:
                     except ZeroDivisionError:
                         pct = None
                     changes.append(pct)
-
+                pulse_width_used.append(pw)
                 slope_samples.append(changes)
                 pw += pw_step
-                pulse_width_samples = [pw]
+                pulse_width_samples = []
 
                 pw_time_milestone = time.time()
 
         for slope in slope_samples:
             index = slope_samples.index(slope)
-            print(feedback_samples[index][0], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
+            print(pulse_width_used[index], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
         print("*--------------------------------------------------*")
 
     def calibrate(self):
