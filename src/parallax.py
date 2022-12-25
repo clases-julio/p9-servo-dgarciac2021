@@ -94,7 +94,7 @@ class Parallax:
     def __getFeedbackDCBounds(self):
         quick_pw = 1000
         slow_pw = 1450
-        test_timeout = 30.0
+        test_timeout = 3.0
         lower_dc_bound = 30.0
         upper_dc_bound = 80.0
         min_dc = 100.0
@@ -132,7 +132,7 @@ class Parallax:
 
         start_timestamp = time.time()
         
-        #min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
+        min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
 
         print("Analyzing pulse width boundaries...")
 
