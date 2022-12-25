@@ -86,7 +86,7 @@ class Parallax:
         if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
                 while self.__pi.get_servo_pulsewidth(self.controlPin) != pw:
-                    print("Hello?")
+                    print(self.__pi.get_servo_pulsewidth(self.controlPin), pw)
                     continue
 
 
