@@ -130,6 +130,8 @@ class Parallax:
         max_pw = upper_limit
         pw = min_pw
 
+        print(min_pw, max_pw)
+
         time_per_pw = 0.5
         sample_interval = time_per_pw/20
         pw_time_milestone = time.time()
@@ -182,10 +184,8 @@ class Parallax:
         print("Analyzing pulse width boundaries...")
 
         factor = 2.0
-        max_factor = factor/100 + 1.0
-        min_factor = (factor/100 - 1.0) * -1.0
-
-        print(max_factor, min_factor)
+        max_factor = 1.0 + factor/100
+        min_factor = 1.0 - factor/100
 
         self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor)
         self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor)
