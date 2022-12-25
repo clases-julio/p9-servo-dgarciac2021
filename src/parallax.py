@@ -128,7 +128,7 @@ class Parallax:
 
         return min_dc, max_dc
     
-    def __find_duty_cycle_boundaries(self, lower_limit, upper_limit, min_dc = __MIN_FB_DC, max_dc = __MAX_FB_DC):
+    def __find_duty_cycle_boundaries(self, target, lower_limit, upper_limit, min_dc = __MIN_FB_DC, max_dc = __MAX_FB_DC):
         pw_step = 1
         min_pw = round(lower_limit)
         max_pw = round(upper_limit)
@@ -178,8 +178,11 @@ class Parallax:
                 pw_time_milestone = time.time()
 
         for slope in slope_samples:
-            if slope == 0.0:
-                return pulse_width_used[slope_samples.index(slope) - 1]
+            if target == self.__MAX_CW_PW:
+                print(slope)
+            elif target == self.__MIN_CW_PW:
+                if slope == 0.0:
+                    return pulse_width_used[slope_samples.index(slope) - 1]
 
     def calibrate(self):
 
@@ -198,8 +201,8 @@ class Parallax:
         max_factor = 1.0 + factor/100
         min_factor = 1.0 - factor/100
 
-        #self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor, min_fb_dc, max_fb_dc)
-        print(self.__find_duty_cycle_boundaries(self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor, min_fb_dc, max_fb_dc))
+        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW, self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor, min_fb_dc, max_fb_dc)
+        print(self.__find_duty_cycle_boundaries(self.__MIN_CW_PW, self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor, min_fb_dc, max_fb_dc))
         #self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW*min_factor, self.__MIN_CCW_PW*max_factor)
         #self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CCW_PW*max_factor)
 
