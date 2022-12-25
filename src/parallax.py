@@ -48,7 +48,7 @@ class Parallax:
         self.__power = 0
 
         self.__pi = pigpio.pi()
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+        self.__pi.set_servo_pulsewidth(self.controlPin, 1470)
 
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
@@ -158,7 +158,7 @@ class Parallax:
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
-                        if math.isclose(x1, x2, abs_tol=0.65):
+                        if math.isclose(x1, x2, abs_tol=0.55):
                             pct = 0.0
                         elif x1 > x2:
                             pct1 = (max_dc - x1) * 100 / x1
