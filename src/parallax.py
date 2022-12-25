@@ -190,7 +190,7 @@ class Parallax:
 
         print(feedback_samples[0][1:])
         print(time_samples[0][1:])
-        print(slope_samples[0])
+        print(slope_samples[0][1:])
 
 
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
