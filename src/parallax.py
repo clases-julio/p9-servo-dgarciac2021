@@ -158,7 +158,7 @@ class Parallax:
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     print(x1, x2)
                     try:
-                        if x1 > x2:
+                        if round(x1) > round(x2):
                             print("Aye!")
                             pct1 = (max_dc - x1) * 100 / x1
                             pct2 = (x2 - min_dc) * 100 / min_dc
