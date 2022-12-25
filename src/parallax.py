@@ -129,7 +129,7 @@ class Parallax:
         return min_dc, max_dc
     
     def __find_duty_cycle_boundaries(self, lower_limit, upper_limit, min_dc = __MIN_FB_DC, max_dc = __MAX_FB_DC):
-        pw_step = 5
+        pw_step = 1
         min_pw = round(lower_limit)
         max_pw = round(upper_limit)
         pw = min_pw
@@ -176,9 +176,8 @@ class Parallax:
 
                 pw_time_milestone = time.time()
 
-        for slope in slope_samples:
-            index = slope_samples.index(slope)
-            print(pulse_width_used[index], ":", round(sum(slope) / len(slope), 2))
+        for index in range(0, len(slope_samples)):
+            print(pulse_width_used[index], ":", round(sum(slope_samples[index]) / len(slope_samples[index]), 2))
 
         print("*--------------------------------------------------*")
 
