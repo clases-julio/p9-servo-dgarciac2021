@@ -175,7 +175,6 @@ class Parallax:
 
         for slope in slope_samples:
             index = slope_samples.index(slope)
-            print(feedback_samples[index])
             print(pulse_width_used[index], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
 
         print("*--------------------------------------------------*")
@@ -187,6 +186,9 @@ class Parallax:
         start_timestamp = time.time()
         
         min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
+
+        print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
+        print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
 
         print("Analyzing pulse width boundaries...")
 
@@ -200,10 +202,6 @@ class Parallax:
         #self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CCW_PW*max_factor)
 
         print("Pulse width boundaries found!", end="\n\n")
-
-        print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
-        print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
-
 
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
 
