@@ -48,7 +48,7 @@ class Parallax:
         self.__power = 0
 
         self.__pi = pigpio.pi()
-        self.__pi.set_servo_pulsewidth(self.controlPin, 1470)
+        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
         self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
 
@@ -170,6 +170,7 @@ class Parallax:
                         pct = 0.0
                     changes.append(round(pct, 2))
                 pulse_width_used.append(pw)
+                changes = round(sum(changes) / len(changes), 2)
                 slope_samples.append(changes)
                 pw += pw_step
                 pulse_width_samples = []
@@ -177,7 +178,7 @@ class Parallax:
                 pw_time_milestone = time.time()
 
         for index in range(0, len(slope_samples)):
-            print(pulse_width_used[index], ":", round(sum(slope_samples[index]) / len(slope_samples[index]), 2))
+            print(pulse_width_used[index], ":", slope_samples[index])
 
         print("*--------------------------------------------------*")
 
