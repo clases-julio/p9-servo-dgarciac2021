@@ -183,7 +183,7 @@ class Parallax:
 
         factor = 2.0
         max_factor = factor/100 + 1.0
-        min_factor = factor/100 - 1.0
+        min_factor = (factor/100 - 1.0) * -1.0
 
         print(max_factor, min_factor)
 
