@@ -125,6 +125,53 @@ class Parallax:
         print("Feedback signal analyzed!")
 
         return min_dc, max_dc
+    
+    def __find_duty_cycle_boundaries(self, lower_limit, upper_limit):
+        pw_step = 1
+        min_pw = lower_limit
+        max_pw = upper_limit
+        pw = min_pw
+
+        time_per_pw = 0.5
+        sample_interval = time_per_pw/20
+        pw_time_milestone = time.time()
+        sample_time_milestone = time.time()
+
+        pulse_width_samples = [pw]
+        feedback_samples = []
+        slope_samples = []
+
+        while pw <= max_pw:
+            self.__run_and_wait(pw)
+
+            if (time.time() - sample_time_milestone >= sample_interval):
+                feedback_sample = self.__feedbackReader.duty_cycle()
+                if feedback_sample != 0.0:
+                    pulse_width_samples.append(feedback_sample)
+                sample_time_milestone = time.time()
+            
+            if (time.time() - pw_time_milestone >= time_per_pw):
+                feedback_samples.append(pulse_width_samples)
+
+                changes = []
+                for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
+                    try:
+                        pct = round((x2 - x1) * 100 / x1, 2)
+                    except ZeroDivisionError:
+                        pct = None
+                    changes.append(pct)
+
+                slope_samples.append(changes)
+                pw += pw_step
+                pulse_width_samples = [pw]
+
+                pw_time_milestone = time.time()
+
+                print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
+
+        for slope in slope_samples:
+            index = slope_samples.index(slope)
+            print(feedback_samples[index][0], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
 
     def calibrate(self):
 
@@ -136,61 +183,12 @@ class Parallax:
 
         print("Analyzing pulse width boundaries...")
 
-        pw_step = 5
-        min_pw = self.__MAX_CW_PW - 100.0
-        max_pw = self.__MAX_CCW_PW + 100.0
-        pw = min_pw
-        
-        time_per_pw = 0.5
-        sample_interval = time_per_pw/20
-        pw_time_milestone = time.time()
-        sample_time_milestone = time.time()
-
-        pulse_width_samples = [pw]
-        gathered_time_samples = [time.time()]
-        time_samples = []
-        feedback_samples = []
-        slope_samples = []
-
-        while pw <= max_pw:
-            self.__run_and_wait(pw)
-
-            if (time.time() - sample_time_milestone >= sample_interval):
-                feedback_sample = round(self.__feedbackReader.duty_cycle(), 2)
-                if feedback_sample != 0.0:
-                    pulse_width_samples.append(feedback_sample)
-                    gathered_time_samples.append(time.time())
-                sample_time_milestone = time.time()
-
-
-            if (time.time() - pw_time_milestone >= time_per_pw):
-                feedback_samples.append(pulse_width_samples)
-                gathered_time_samples = [timestamp - gathered_time_samples[0] for timestamp in gathered_time_samples]
-                changes = []
-                for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
-                    try:
-                        pct = round((x2 - x1) * 100 / x1, 2)
-                    except ZeroDivisionError:
-                        pct = None
-                    changes.append(pct)
-                time_samples.append(gathered_time_samples)
-                slope_samples.append(changes)
-                pw += pw_step
-                pulse_width_samples = [pw]
-                gathered_time_samples = [time.time()]
-
-                pw_time_milestone = time.time()
-            
-            print("Completed: ", round(((pw - min_pw) * 100) / (max_pw - min_pw), 1), "%", end="\r")
+        self.__find_duty_cycle_boundaries(self.__MAX_CW_PW*0.95, self.__MAX_CW_PW*1.05 )
 
         print("Pulse width boundaries found!", end="\n\n")
 
         print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
-
-        for slope in slope_samples:
-            index = slope_samples.index(slope)
-            print(feedback_samples[index][0], ":", round(sum(slope[1:]) / len(slope[1:]), 2))
 
 
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
