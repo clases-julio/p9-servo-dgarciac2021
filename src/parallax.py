@@ -159,7 +159,7 @@ class Parallax:
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
                         if math.isclose(x1, x2, abs_tol=0.5):
-                            pct = None
+                            pct = 0.0
                         elif x2 > x1:
                             pct1 = (max_dc - x1) * 100 / x1
                             pct2 = (x2 - min_dc) * 100 / min_dc
@@ -167,7 +167,7 @@ class Parallax:
                         else:
                             pct = (x2 - x1) * 100 / x1
                     except ZeroDivisionError:
-                        pct = None
+                        pct = 0.0
                     changes.append(round(pct, 2))
                 pulse_width_used.append(pw)
                 slope_samples.append(changes)
