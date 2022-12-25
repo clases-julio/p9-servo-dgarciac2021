@@ -156,6 +156,7 @@ class Parallax:
                 feedback_samples.append(pulse_width_samples)
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
+                    print(x1, x2)
                     try:
                         if x1 > x2:
                             pct1 = (max_dc - x1) * 100 / x1
@@ -175,7 +176,7 @@ class Parallax:
 
         for slope in slope_samples:
             index = slope_samples.index(slope)
-            print(pulse_width_used[index], ":", round(sum(slope) / len(slope), 2))
+            #print(pulse_width_used[index], ":", round(sum(slope) / len(slope), 2))
 
         print("*--------------------------------------------------*")
 
