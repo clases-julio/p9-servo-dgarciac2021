@@ -158,7 +158,7 @@ class Parallax:
                 changes = []
                 for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
                     try:
-                        if math.isclose(x1, x2, abs_tol=0.5):
+                        if math.isclose(x1, x2, abs_tol=1.0):
                             pct = 0.0
                         elif x1 > x2:
                             pct1 = (max_dc - x1) * 100 / x1
