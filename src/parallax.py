@@ -224,7 +224,7 @@ class Parallax:
         average_lap_time_max_speed = sum(lap_times[1:])/len(lap_times[1:])
         average_lap_time = average_lap_time_max_speed
 
-        time_per_pw = 0.5
+        time_per_pw = 2.5
         pw_time_milestone = time.time()
 
         pulse_width = safe_limit_pulse_width
