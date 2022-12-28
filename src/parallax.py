@@ -249,6 +249,16 @@ class Parallax:
                 limit_feedback_samples = []
                 print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, ")", end="\r")
                 pw_time_milestone = time.time()
+        
+        print("                                                              ", end="\r")
+
+        if rotation_dir is self.CLOCKWISE:
+            print("Clockwise done!")
+            self.__max_cw_pw = pulse_width
+            self.__find_stop_boundaries(self.COUNTER_CLOCKWISE)
+        elif rotation_dir is self.COUNTER_CLOCKWISE:
+            print("Counter-clockwise done!")
+            self.__max_ccw_pw = pulse_width
 
 
 
