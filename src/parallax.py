@@ -233,7 +233,7 @@ class Parallax:
         limit_feedback_samples = []
         lap_completed = False
 
-        while math.isclose(average_lap_time, average_lap_time_max_speed, abs_tol=1.0):
+        while average_lap_time <= average_lap_time_max_speed * 1.05:
             self.__run_and_wait(pulse_width)
 
             if lap_completed is False and self.getFeedbackDutyCycle() >= median_feedback_duty_cycle:
