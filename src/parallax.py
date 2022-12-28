@@ -204,6 +204,7 @@ class Parallax:
 
         start_time = time.time()
         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        print(start_feedback_duty_cycle)
 
         laps = 10
 
