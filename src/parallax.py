@@ -100,7 +100,7 @@ class Parallax:
         quick_pw = self.__max_ccw_pw * factor
         slow_pw = self.__min_ccw_pw * factor
 
-        test_timeout = 5.0
+        test_timeout = 15.0
 
         lower_dc_bound = 30.0
         upper_dc_bound = 80.0
