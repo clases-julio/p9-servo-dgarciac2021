@@ -244,7 +244,7 @@ class Parallax:
 
         start_time = time.time()
 
-        while average_lap_time <= average_lap_time_max_speed + 0.02:
+        while average_lap_time <= average_lap_time_max_speed + 0.015:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
@@ -255,7 +255,6 @@ class Parallax:
                 average_lap_time = (time.time() - start_time)/laps
                 pulse_width += pulse_width_step
                 print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
-                print(average_lap_time)
                 laps_counter = 0
                 self.__run_and_wait(pulse_width)
                 start_time = time.time()
@@ -281,14 +280,14 @@ class Parallax:
 
         start_timestamp = time.time()
         
-        #self.__getFeedbackDCBounds()
+        self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        #self.__find_stop_boundaries()
+        self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
@@ -297,7 +296,7 @@ class Parallax:
 
         print("Finding limit boundaries...")
 
-        self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
+        self.__find_limit_boundaries()
 
         print("Limit boundaries found!")
 
