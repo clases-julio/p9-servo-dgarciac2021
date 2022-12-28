@@ -182,6 +182,12 @@ class Parallax:
                 pulse_width += pulse_width_step
                 print("Trying with", pulse_width, "μs...", end="\r")
                 pw_time_milestone = time.time()
+        
+        if rotation_dir is self.CLOCKWISE:
+            self.__min_cw_pw = pulse_width
+            self.__find_stop_boundaries(self.COUNTER_CLOCKWISE)
+        elif rotation_dir is self.COUNTER_CLOCKWISE:
+            self.__min_ccw_pw = pulse_width
 
     def calibrate(self):
 
@@ -200,8 +206,8 @@ class Parallax:
 
         print("Stop boundaries found!")
 
-        print("Minimum pulse width for clockwise:", self.__min_fb_dc, "%")
-        print("Maximum pulse width for counter-clockwise:", self.__max_fb_dc, "%", end="\n\n")
+        print("Minimum pulse width for clockwise:", self.__min_cw_pw, "μs")
+        print("Maximum pulse width for counter-clockwise:", self.__min_ccw_pw, "μs", end="\n\n")
 
         # factor = 2.0
         # max_factor = 1.0 + factor/100
