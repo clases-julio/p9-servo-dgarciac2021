@@ -221,8 +221,8 @@ class Parallax:
                 limit_feedback_samples.append(time.time())
             elif lap_completed is True and self.getFeedbackDutyCycle() < median_feedback_duty_cycle:
                 lap_completed = False
-        
-        print(limit_feedback_samples)
+
+        print(limit_feedback_samples[i + 1] - limit_feedback_samples[i] for i in range(len(limit_feedback_samples)-1))
 
         exit(0)
 
