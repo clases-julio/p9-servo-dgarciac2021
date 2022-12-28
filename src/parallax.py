@@ -213,8 +213,8 @@ class Parallax:
         self.__run_and_wait(safe_limit_pulse_width)
 
         while laps_counter < laps:
-            print(laps_counter)
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
+                print(lap_completed)
                 lap_completed = True
                 laps_counter += 1
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
