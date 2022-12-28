@@ -202,7 +202,7 @@ class Parallax:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        laps = 15
+        laps = 5
         laps_counter = 0
         lap_completed = False
 
