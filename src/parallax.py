@@ -244,7 +244,7 @@ class Parallax:
 
         start_time = time.time()
 
-        while (average_lap_time / average_lap_time_max_speed) >= 1.02:
+        while (average_lap_time / average_lap_time_max_speed) >= 5:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
@@ -254,7 +254,7 @@ class Parallax:
             if laps_counter >= laps:
                 average_lap_time = (time.time() - start_time)/laps
                 pulse_width += pulse_width_step
-                print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
+                print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time / average_lap_time_max_speed, "s)", end="\r")
                 laps_counter = 0
                 self.__run_and_wait(pulse_width)
                 start_feedback_duty_cycle = self.getFeedbackDutyCycle()
