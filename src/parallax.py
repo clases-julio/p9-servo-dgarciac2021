@@ -151,7 +151,7 @@ class Parallax:
 
         pulse_width_step = 1
 
-        safe_stop_pulse_width = (self.__min_cw_pw + self.__min_ccw_pw)/2
+        safe_stop_pulse_width = round((self.__min_cw_pw + self.__min_ccw_pw)/2)
 
         if rotation_dir is self.CLOCKWISE:
             pulse_width_step *= -1
@@ -166,61 +166,23 @@ class Parallax:
         while time.time() - static_feedback_time_milestone < static_feedback_time:
             static_feedback_samples.append(self.getFeedbackDutyCycle())
 
-        print(sum(static_feedback_samples)/len(static_feedback_samples))
+        static_average_feedback = sum(static_feedback_samples)/len(static_feedback_samples)
 
-        exit(0)
+        time_per_pw = 0.5
+        pw_time_milestone = time.time()
 
-        # time_per_pw = 0.5
-        # sample_interval = time_per_pw/20
-        # pw_time_milestone = time.time()
-        # sample_time_milestone = time.time()
+        feedback_samples = []
 
-        # pulse_width_samples = []
-        # pulse_width_used = []
-        # feedback_samples = []
-        # slope_samples = []
+        pulse_width = safe_stop_pulse_width
 
-        # while pw <= max_pw:
-        #     self.__run_and_wait(pw)
+        while math.isclose(self.getFeedbackDutyCycle(), static_average_feedback, abs_tol=1.0):
+            self.__run_and_wait(pulse_width)
 
-        #     if (time.time() - sample_time_milestone >= sample_interval):
-        #         feedback_sample = self.__feedbackReader.duty_cycle()
-        #         if feedback_sample != 0.0:
-        #             pulse_width_samples.append(feedback_sample)
-        #         sample_time_milestone = time.time()
-            
-        #     if (time.time() - pw_time_milestone >= time_per_pw):
-        #         feedback_samples.append(pulse_width_samples)
-        #         changes = []
-        #         for x1, x2 in zip(pulse_width_samples[:-1], pulse_width_samples[1:]):
-        #             try:
-        #                 if math.isclose(x1, x2, abs_tol=0.55):
-        #                     pct = 0.0
-        #                 elif x1 < x2:
-        #                     pct1 = (max_dc - x2) * 100 / x2
-        #                     pct2 = (x1 - min_dc) * 100 / min_dc
-        #                     pct = pct1 + pct2
-        #                 else:
-        #                     pct = (x2 - x1) * 100 / x1
-        #             except ZeroDivisionError:
-        #                 pct = 0.0
-        #             changes.append(round(pct, 2))
-        #         pulse_width_used.append(pw)
-        #         changes = round(sum(changes) / len(changes), 2)
-        #         slope_samples.append(changes)
-        #         pw += pw_step
-        #         pulse_width_samples = []
+            if (time.time() - pw_time_milestone >= time_per_pw):
+                pulse_width += pulse_width_step
+                pw_time_milestone = time.time()
 
-        #         pw_time_milestone = time.time()
-
-        # for slope in slope_samples:
-        #     if target == self.__max_cw_pw:
-        #         print(pulse_width_used[slope_samples.index(slope)], ":", slope)
-        #     elif target == self.__min_cw_pw:
-        #         if slope == 0.0:
-        #             return pulse_width_used[slope_samples.index(slope) - 1]
-        #     elif target == self.__min_ccw_pw:
-        #         print(pulse_width_used[slope_samples.index(slope)], ":", slope)
+        print(pulse_width)
 
     def calibrate(self):
 
