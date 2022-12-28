@@ -202,7 +202,7 @@ class Parallax:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        laps = 5
+        laps = 10
         laps_counter = 0
         lap_completed = False
 
@@ -217,7 +217,7 @@ class Parallax:
 
         start_time = time.time()
 
-        while laps_counter < laps:
+        while laps_counter <= laps:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
