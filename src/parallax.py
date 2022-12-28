@@ -202,19 +202,20 @@ class Parallax:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.01
 
-        start_time = time.time()
-        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        while start_feedback_duty_cycle == 0.0:
-            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        time.sleep(1)
-
         laps = 15
         laps_counter = 0
         lap_completed = False
 
         self.__run_and_wait(safe_limit_pulse_width)
+
+        time.sleep(1)
+
+        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        while start_feedback_duty_cycle == 0.0:
+            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        start_time = time.time()
 
         while laps_counter < laps:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
@@ -231,15 +232,21 @@ class Parallax:
         pulse_width = safe_limit_pulse_width
         print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
 
-        start_time = time.time()
-        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
         laps_counter = 0
         lap_completed = False
 
-        while average_lap_time <= average_lap_time_max_speed:
-            self.__run_and_wait(pulse_width)
+        self.__run_and_wait(pulse_width)
 
+        time.sleep(1)
+
+        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        while start_feedback_duty_cycle == 0.0:
+            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        start_time = time.time()
+
+        while average_lap_time <= average_lap_time_max_speed:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
@@ -251,6 +258,8 @@ class Parallax:
                 pulse_width += pulse_width_step
                 print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
                 laps_counter = 0
+                self.__run_and_wait(pulse_width)
+                time.sleep(1)
                 start_time = time.time()
                 start_feedback_duty_cycle = self.getFeedbackDutyCycle()
                 lap_completed = False
