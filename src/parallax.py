@@ -208,7 +208,7 @@ class Parallax:
 
         self.__run_and_wait(safe_limit_pulse_width)
 
-        time.sleep(1)
+        time.sleep(2)
 
         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
