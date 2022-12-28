@@ -224,7 +224,7 @@ class Parallax:
 
         lap_times = [limit_feedback_samples[i + 1] - limit_feedback_samples[i] for i in range(len(limit_feedback_samples)-1)]
 
-        print(lap_times[1:])
+        print("Average time per lap at max speed: ", round(sum(lap_times[1:])/len(lap_times[1:]), 2), "s")
 
         exit(0)
 
