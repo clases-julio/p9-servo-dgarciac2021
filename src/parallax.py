@@ -228,7 +228,7 @@ class Parallax:
         pw_time_milestone = time.time()
 
         pulse_width = safe_limit_pulse_width
-        print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, end="\r")
+        print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, ")", end="\r")
 
         limit_feedback_samples = []
         lap_completed = False
@@ -247,7 +247,7 @@ class Parallax:
                 average_lap_time = sum(lap_times[1:])/len(lap_times[1:])
                 pulse_width += pulse_width_step
                 limit_feedback_samples = []
-                print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, end="\r")
+                print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, ")", end="\r")
                 pw_time_milestone = time.time()
 
 
