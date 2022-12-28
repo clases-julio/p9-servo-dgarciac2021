@@ -204,8 +204,8 @@ class Parallax:
         
         self.__getFeedbackDCBounds()
 
-        print("Minimum feedback signal duty cycle readed:", self._min_fb_dc, "%")
-        print("Maximum feedback signal duty cycle readed:", self_.max_fb_dc, "%", end="\n\n")
+        print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
+        print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         # print("Analyzing pulse width boundaries...")
 
