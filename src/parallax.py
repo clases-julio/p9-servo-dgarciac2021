@@ -171,8 +171,6 @@ class Parallax:
         time_per_pw = 0.5
         pw_time_milestone = time.time()
 
-        feedback_samples = []
-
         pulse_width = safe_stop_pulse_width
         print("Trying with", pulse_width, "μs pulse width...", end="\r")
 
@@ -199,10 +197,10 @@ class Parallax:
         pulse_width_step = 1
 
         if rotation_dir is self.CLOCKWISE:
-            safe_limit_pulse_width = self.__max_cw_pw * 0.98
+            safe_limit_pulse_width = self.__max_cw_pw * 0.99
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             pulse_width_step *= -1
-            safe_limit_pulse_width = self.__max_ccw_pw * 1.02
+            safe_limit_pulse_width = self.__max_ccw_pw * 1.01
         
         median_feedback_duty_cycle = round((self.__max_fb_dc + self.__min_fb_dc)/2)
 
@@ -223,10 +221,37 @@ class Parallax:
                 lap_completed = False
 
         lap_times = [limit_feedback_samples[i + 1] - limit_feedback_samples[i] for i in range(len(limit_feedback_samples)-1)]
+        average_lap_time_max_speed = sum(lap_times[1:])/len(lap_times[1:])
+        average_lap_time = average_lap_time_max_speed
 
-        print("Average time per lap at max speed: ", sum(lap_times[1:])/len(lap_times[1:]), "s")
+        time_per_pw = 0.5
+        pw_time_milestone = time.time()
 
-        exit(0)
+        pulse_width = safe_limit_pulse_width
+        print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, end="\r")
+
+        limit_feedback_samples = []
+        lap_completed = False
+
+        while math.isclose(average_lap_time, average_lap_time_max_speed, abs_tol=1.0):
+            self.__run_and_wait(pulse_width)
+
+            if lap_completed is False and self.getFeedbackDutyCycle() >= median_feedback_duty_cycle:
+                lap_completed = True
+                limit_feedback_samples.append(time.time())
+            elif lap_completed is True and self.getFeedbackDutyCycle() < median_feedback_duty_cycle:
+                lap_completed = False
+
+            if (time.time() - pw_time_milestone >= time_per_pw):
+                lap_times = [limit_feedback_samples[i + 1] - limit_feedback_samples[i] for i in range(len(limit_feedback_samples)-1)]
+                average_lap_time = sum(lap_times[1:])/len(lap_times[1:])
+                pulse_width += pulse_width_step
+                limit_feedback_samples = []
+                print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, end="\r")
+                pw_time_milestone = time.time()
+
+
+
 
     def calibrate(self):
 
