@@ -100,6 +100,7 @@ class Parallax:
         self.__pi.set_servo_pulsewidth(self.controlPin, 0)
 
     def __run_and_wait(self, pulse_width):
+        pulse_width = round(pulse_width)
         if pulse_width != self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pulse_width)
 
