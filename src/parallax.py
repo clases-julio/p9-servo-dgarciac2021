@@ -197,10 +197,10 @@ class Parallax:
         pulse_width_step = 1
 
         if rotation_dir is self.CLOCKWISE:
-            safe_limit_pulse_width = self.__max_cw_pw * 0.99
+            safe_limit_pulse_width = self.__max_cw_pw * 0.995
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             pulse_width_step *= -1
-            safe_limit_pulse_width = self.__max_ccw_pw * 1.01
+            safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
         laps = 15
         laps_counter = 0
@@ -255,6 +255,7 @@ class Parallax:
                 average_lap_time = (time.time() - start_time)/laps
                 pulse_width += pulse_width_step
                 print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
+                print(average_lap_time)
                 laps_counter = 0
                 self.__run_and_wait(pulse_width)
                 start_time = time.time()
@@ -296,7 +297,7 @@ class Parallax:
 
         print("Finding limit boundaries...")
 
-        self.__find_limit_boundaries()
+        self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
 
         print("Limit boundaries found!")
 
