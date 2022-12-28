@@ -95,7 +95,7 @@ class Parallax:
 
 
     def __getFeedbackDCBounds(self):
-        factor = 1.05
+        factor = 1.01
         quick_pw = self.__max_ccw_pw * factor
         slow_pw = self.__min_ccw_pw * factor
 
