@@ -183,8 +183,6 @@ class Parallax:
                 print("Trying with", pulse_width, "μs...", end="\r")
                 pw_time_milestone = time.time()
 
-        print(pulse_width)
-
     def calibrate(self):
 
         print("Starting calibration procedure...")
