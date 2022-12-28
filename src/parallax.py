@@ -204,9 +204,8 @@ class Parallax:
 
         start_time = time.time()
         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-        print(start_feedback_duty_cycle)
-
-        exit(0)
+        while start_feedback_duty_cycle == 0.0:
+            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
         laps = 10
 
@@ -216,7 +215,6 @@ class Parallax:
         self.__run_and_wait(safe_limit_pulse_width)
 
         while laps_counter < laps:
-            print(self.getFeedbackDutyCycle() < start_feedback_duty_cycle)
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
