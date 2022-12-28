@@ -180,6 +180,7 @@ class Parallax:
 
             if (time.time() - pw_time_milestone >= time_per_pw):
                 pulse_width += pulse_width_step
+                print("Trying with", pulse_width)
                 pw_time_milestone = time.time()
 
         print(pulse_width)
