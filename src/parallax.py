@@ -184,7 +184,7 @@ class Parallax:
                 print("Trying with", pulse_width, "μs...", end="\r")
                 pw_time_milestone = time.time()
 
-        print("                    ", end="\r")
+        print("                         ", end="\r")
 
         if rotation_dir is self.CLOCKWISE:
             print("Clockwise done!")
