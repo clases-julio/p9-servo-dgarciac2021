@@ -28,17 +28,17 @@ class Parallax:
     CLOCKWISE = __DirOfRot.CLOCKWISE
     COUNTER_CLOCKWISE = __DirOfRot.COUNTER_CLOCKWISE
 
-    __MIN_FB_DC = 2.9
-    __MAX_FB_DC = 97.1
+    __min_fb_dc = 2.9
+    __max_fb_dc = 97.1
 
     __PWM_FREQUENCY = 50
     __PWM_PERIOD = 1/__PWM_FREQUENCY
 
-    __MAX_CW_PW = 1280.0
-    __MAX_CCW_PW = 1720.0
+    __max_cw_pw = 1280.0
+    __max_ccw_pw = 1720.0
 
-    __MIN_CW_PW = 1480.0
-    __MIN_CCW_PW = 1520.0
+    __min_cw_pw = 1480.0
+    __min_ccw_pw = 1520.0
 
     def __init__(self, cPin, fPin):
 
@@ -66,11 +66,11 @@ class Parallax:
 
     def __calculatePulseWidth(self):
         if(self.turnDirection is self.CLOCKWISE):
-            max = self.__MAX_CW_PW
-            min = self.__MIN_CW_PW
+            max = self.__max_cw_pw
+            min = self.__min_cw_pw
         if(self.turnDirection is self.COUNTER_CLOCKWISE):
-            max = self.__MAX_CCW_PW
-            min = self.__MIN_CCW_PW
+            max = self.__max_ccw_pw
+            min = self.__min_ccw_pw
 
         return round((min + (((max - min) / 100.0) * self.__power)), 2)
 
@@ -89,16 +89,21 @@ class Parallax:
     def __run_and_wait(self, pw):
         if pw != self.__pi.get_servo_pulsewidth(self.controlPin):
                 self.__pi.set_servo_pulsewidth(self.controlPin, pw)
+
                 while self.__pi.get_servo_pulsewidth(self.controlPin) != pw:
                     continue
 
 
     def __getFeedbackDCBounds(self):
-        quick_pw = 1000
-        slow_pw = 1450
+        factor = 1.05
+        quick_pw = self.__max_ccw_pw * factor
+        slow_pw = self.__min_ccw_pw * factor
+
         test_timeout = 5.0
+
         lower_dc_bound = 30.0
         upper_dc_bound = 80.0
+
         min_dc = 100.0
         max_dc = 0.0
 
@@ -125,12 +130,13 @@ class Parallax:
             print("Completed: ", round(((time.time() - time_milestone)*100)/test_timeout, 1), "%", end="\r")
 
         print("Feedback signal analyzed!")
-
-        return min_dc, max_dc
+        
+        self.__min_fb_dc = min_dc
+        self.__max_fb_dc = max_dc
     
-    def __find_duty_cycle_boundaries(self, target, lower_limit, upper_limit, min_dc = __MIN_FB_DC, max_dc = __MAX_FB_DC):
+    def __find_duty_cycle_boundaries(self, target, lower_limit, upper_limit, min_dc = __min_fb_dc, max_dc = __max_fb_dc):
         pw_step = 1
-        if target == self.__MIN_CW_PW:
+        if target == self.__min_cw_pw:
             min_pw = round(lower_limit)
             max_pw = round(upper_limit)
         else:
@@ -182,12 +188,12 @@ class Parallax:
                 pw_time_milestone = time.time()
 
         for slope in slope_samples:
-            if target == self.__MAX_CW_PW:
+            if target == self.__max_cw_pw:
                 print(pulse_width_used[slope_samples.index(slope)], ":", slope)
-            elif target == self.__MIN_CW_PW:
+            elif target == self.__min_cw_pw:
                 if slope == 0.0:
                     return pulse_width_used[slope_samples.index(slope) - 1]
-            elif target == self.__MIN_CCW_PW:
+            elif target == self.__min_ccw_pw:
                 print(pulse_width_used[slope_samples.index(slope)], ":", slope)
 
     def calibrate(self):
@@ -196,23 +202,23 @@ class Parallax:
 
         start_timestamp = time.time()
         
-        min_fb_dc, max_fb_dc = self.__getFeedbackDCBounds()
+        self.__getFeedbackDCBounds()
 
-        print("Minimum feedback signal duty cycle readed:", min_fb_dc, "%")
-        print("Maximum feedback signal duty cycle readed:", max_fb_dc, "%", end="\n\n")
+        print("Minimum feedback signal duty cycle readed:", self._min_fb_dc, "%")
+        print("Maximum feedback signal duty cycle readed:", self_.max_fb_dc, "%", end="\n\n")
 
-        print("Analyzing pulse width boundaries...")
+        # print("Analyzing pulse width boundaries...")
 
-        factor = 2.0
-        max_factor = 1.0 + factor/100
-        min_factor = 1.0 - factor/100
+        # factor = 2.0
+        # max_factor = 1.0 + factor/100
+        # min_factor = 1.0 - factor/100
 
-        #self.__find_duty_cycle_boundaries(self.__MAX_CW_PW, self.__MAX_CW_PW*min_factor, self.__MAX_CW_PW*max_factor, min_fb_dc, max_fb_dc)
-        #print(self.__find_duty_cycle_boundaries(self.__MIN_CW_PW, self.__MIN_CW_PW*min_factor, self.__MIN_CW_PW*max_factor, min_fb_dc, max_fb_dc))
-        print(self.__find_duty_cycle_boundaries(self.__MIN_CCW_PW, self.__MIN_CCW_PW*max_factor, self.__MIN_CCW_PW*min_factor))
-        #self.__find_duty_cycle_boundaries(self.__MAX_CCW_PW*min_factor, self.__MAX_CCW_PW*max_factor)
+        # #self.__find_duty_cycle_boundaries(self.__max_cw_pw, self.__max_cw_pw*min_factor, self.__max_cw_pw*max_factor, min_fb_dc, max_fb_dc)
+        # #print(self.__find_duty_cycle_boundaries(self.__min_cw_pw, self.__min_cw_pw*min_factor, self.__min_cw_pw*max_factor, min_fb_dc, max_fb_dc))
+        # print(self.__find_duty_cycle_boundaries(self.__min_ccw_pw, self.__min_ccw_pw*max_factor, self.__min_ccw_pw*min_factor))
+        # #self.__find_duty_cycle_boundaries(self.__max_ccw_pw*min_factor, self.__max_ccw_pw*max_factor)
 
-        print("Pulse width boundaries found!", end="\n\n")
+        # print("Pulse width boundaries found!", end="\n\n")
 
         print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
 
