@@ -225,6 +225,8 @@ class Parallax:
         average_lap_time_max_speed = (time.time() - start_time)/laps
         average_lap_time = average_lap_time_max_speed
 
+        print("Average time per lap at maximum speed", round(average_lap_time_max_speed, 4), "s")
+
         pulse_width = safe_limit_pulse_width
         print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
 
