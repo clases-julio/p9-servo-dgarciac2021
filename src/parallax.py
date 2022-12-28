@@ -112,7 +112,7 @@ class Parallax:
         fast_pulse_width = self.__max_ccw_pw * factor
         slow_pulse_width = self.__min_ccw_pw * factor
 
-        test_timeout = 15.0
+        test_timeout = 5.0
 
         lower_dc_bound = 30.0
         upper_dc_bound = 80.0
@@ -180,7 +180,7 @@ class Parallax:
 
             if (time.time() - pw_time_milestone >= time_per_pw):
                 pulse_width += pulse_width_step
-                print("Trying with", pulse_width)
+                print("Trying with", pulse_width, "μs...", end="\r")
                 pw_time_milestone = time.time()
 
         print(pulse_width)
