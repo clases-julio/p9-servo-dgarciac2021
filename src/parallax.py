@@ -194,6 +194,38 @@ class Parallax:
             print("Counter-clockwise done!")
             self.__min_ccw_pw = pulse_width
 
+    def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
+
+        pulse_width_step = 1
+
+        if rotation_dir is self.CLOCKWISE:
+            safe_limit_pulse_width = self.__max_cw_pw * 0.98
+        elif rotation_dir is self.COUNTER_CLOCKWISE:
+            pulse_width_step *= -1
+            safe_limit_pulse_width = self.__max_ccw_pw * 1.02
+        
+        median_feedback_duty_cycle = round((self.__max_fb_dc + self.__min_fb_dc)/2)
+
+        limit_feedback_time = 5.0
+        limit_feedback_time_milestone = time.time()
+
+        limit_feedback_samples = []
+
+        self.__run_and_wait(safe_limit_pulse_width)
+
+        lap_completed = False
+
+        while time.time() - limit_feedback_time_milestone < limit_feedback_time:
+            if lap_completed is False and self.getFeedbackDutyCycle() >= median_feedback_duty_cycle:
+                lap_completed = True
+                limit_feedback_samples.append(time.time())
+            elif lap_completed is True and self.getFeedbackDutyCycle() < median_feedback_duty_cycle:
+                lap_completed = False
+        
+        print(limit_feedback_samples)
+
+        exit(0)
+
     def calibrate(self):
 
         print("Starting calibration procedure...", end="\n\n")
@@ -214,4 +246,13 @@ class Parallax:
         print("Pulse width for minimum speed clockwise:", self.__min_cw_pw, "μs")
         print("Pulse width for minimum speed counter-clockwise:", self.__min_ccw_pw, "μs", end="\n\n")
 
-        print("\nCalibration time:", round(time.time() - start_timestamp, 1), "s")
+        print("Finding limit boundaries...")
+
+        self.__find_limit_boundaries()
+
+        print("Limit boundaries found!")
+
+        print("Pulse width for maximum speed clockwise:", self.__max_cw_pw, "μs")
+        print("Pulse width for maximum speed counter-clockwise:", self.__max_ccw_pw, "μs", end="\n\n")
+
+        print("Calibration time:", round(time.time() - start_timestamp, 1), "s")
