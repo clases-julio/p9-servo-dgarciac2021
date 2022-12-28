@@ -206,7 +206,7 @@ class Parallax:
         
         median_feedback_duty_cycle = round((self.__max_fb_dc + self.__min_fb_dc)/2)
 
-        limit_feedback_time = 5.0
+        limit_feedback_time = 10.0
         limit_feedback_time_milestone = time.time()
 
         limit_feedback_samples = []
