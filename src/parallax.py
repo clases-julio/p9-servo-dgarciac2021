@@ -201,8 +201,6 @@ class Parallax:
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.01
-        
-        median_feedback_duty_cycle = round((self.__max_fb_dc + self.__min_fb_dc)/2)
 
         start_time = time.time()
         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
@@ -215,6 +213,7 @@ class Parallax:
         self.__run_and_wait(safe_limit_pulse_width)
 
         while laps_counter < laps:
+            print("Hey!")
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
