@@ -208,7 +208,7 @@ class Parallax:
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        laps = 20
+        laps = 15
         laps_counter = 0
         lap_completed = False
 
@@ -232,7 +232,6 @@ class Parallax:
         start_time = time.time()
         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        laps /= 2
         laps_counter = 0
         lap_completed = False
 
