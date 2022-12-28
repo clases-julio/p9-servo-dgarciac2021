@@ -204,52 +204,53 @@ class Parallax:
         
         median_feedback_duty_cycle = round((self.__max_fb_dc + self.__min_fb_dc)/2)
 
-        limit_feedback_time = 2.5
-        limit_feedback_time_milestone = time.time()
+        start_time = time.time()
+        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        limit_feedback_samples = []
+        laps = 10
+
+        laps_counter = 0
+        lap_completed = False
 
         self.__run_and_wait(safe_limit_pulse_width)
 
-        lap_completed = False
-
-        while time.time() - limit_feedback_time_milestone < limit_feedback_time:
-            if lap_completed is False and self.getFeedbackDutyCycle() >= median_feedback_duty_cycle:
+        while laps_counter < laps:
+            if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
-                limit_feedback_samples.append(time.time())
-            elif lap_completed is True and self.getFeedbackDutyCycle() < median_feedback_duty_cycle:
+                laps_counter += 1
+            elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
 
-        lap_times = [limit_feedback_samples[i + 1] - limit_feedback_samples[i] for i in range(len(limit_feedback_samples)-1)]
-        average_lap_time_max_speed = sum(lap_times[1:])/len(lap_times[1:])
+        average_lap_time_max_speed = (time.time() - start_time)/laps
         average_lap_time = average_lap_time_max_speed
-
-        time_per_pw = 2.5
-        pw_time_milestone = time.time()
 
         pulse_width = safe_limit_pulse_width
         print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 2), "s)", end="\r")
 
-        limit_feedback_samples = []
+        start_time = time.time()
+        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        laps_counter = 0
         lap_completed = False
 
-        while average_lap_time <= average_lap_time_max_speed + 0.01:
+        while average_lap_time <= average_lap_time_max_speed + 0.005:
             self.__run_and_wait(pulse_width)
 
-            if lap_completed is False and self.getFeedbackDutyCycle() >= median_feedback_duty_cycle:
+            if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
-                limit_feedback_samples.append(time.time())
-            elif lap_completed is True and self.getFeedbackDutyCycle() < median_feedback_duty_cycle:
+                laps_counter += 1
+            elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
 
-            if (time.time() - pw_time_milestone >= time_per_pw):
-                lap_times = [limit_feedback_samples[i + 1] - limit_feedback_samples[i] for i in range(len(limit_feedback_samples)-1)]
-                average_lap_time = sum(lap_times[1:])/len(lap_times[1:])
+            if laps_counter >= laps:
+                average_lap_time = (time.time() - start_time)/laps
                 pulse_width += pulse_width_step
-                limit_feedback_samples = []
                 print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 2), "s)", end="\r")
-                pw_time_milestone = time.time()
-        
+                laps_counter = 0
+                start_time = time.time()
+                start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+                lap_completed = False
+
         print("                                                              ", end="\r")
 
         if rotation_dir is self.CLOCKWISE:
