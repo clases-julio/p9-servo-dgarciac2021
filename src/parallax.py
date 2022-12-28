@@ -208,7 +208,7 @@ class Parallax:
 
         self.__run_and_wait(safe_limit_pulse_width)
 
-        time.sleep(2)
+        time.sleep(5)
 
         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
@@ -279,15 +279,15 @@ class Parallax:
         print("Starting calibration procedure...", end="\n\n")
 
         start_timestamp = time.time()
-        
-        self.__getFeedbackDCBounds()
+
+        #self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        self.__find_stop_boundaries()
+        #self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
