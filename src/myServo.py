@@ -48,7 +48,9 @@ def draw_gauge(value):
     max_width = 80 - (len(start_str) + len(end_str))
     represented_value = round(max_width * ((value - MIN_POWER)/(MAX_POWER - MIN_POWER)))
 
-    print(start_str, end="")
+    for i in range (0, 81):
+        print(" ", end="")
+    print("\r", start_str, end="")
     for i in range (0, max_width + 1):
         if i == represented_value:
             print(value, end="")
