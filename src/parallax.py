@@ -241,7 +241,8 @@ class Parallax:
                 pulse_width += pulse_width_step
                 laps_counter = 0
                 lap_completed = False
-                print("(avg time per lap =", round(average_lap_time, 4), "s)", "Trying with", round(pulse_width), "μs pulse width...", end="\r")
+                if average_lap_time_max_speed is not None:
+                    print("(avg time per lap =", round(average_lap_time, 4), "s)", "Trying with", round(pulse_width), "μs pulse width...", end="\r")
                 self.__run_and_wait(pulse_width)
                 start_feedback_duty_cycle = self.getFeedbackDutyCycle()
                 while start_feedback_duty_cycle == 0.0:
