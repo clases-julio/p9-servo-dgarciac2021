@@ -49,7 +49,7 @@ def draw_gauge(value):
     for i in range (0, represented_value):
         print(" ", end="")
     print(value, end="")
-    for i in range (represented_value + len(value), MAX_WIDTH):
+    for i in range (represented_value + len(str(value)), MAX_WIDTH):
         print(" ", end="")
     print("| max", end="\r")
 
