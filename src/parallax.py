@@ -191,57 +191,22 @@ class Parallax:
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             print("Counter-clockwise done!")
             self.__min_ccw_pw = pulse_width
-    
-    # def __find_max_speed(self, rotation_dir = CLOCKWISE):
-
-    #     if rotation_dir is self.CLOCKWISE:
-    #         safe_limit_pulse_width = self.__max_cw_pw * 0.995
-    #     elif rotation_dir is self.COUNTER_CLOCKWISE:
-    #         safe_limit_pulse_width = self.__max_ccw_pw * 1.005
-
-    #     laps = 30
-    #     laps_counter = 0
-    #     lap_completed = False
-
-    #     self.__run_and_wait(safe_limit_pulse_width)
-
-    #     start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-    #     while start_feedback_duty_cycle == 0.0:
-    #         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-    #     start_time = time.time()
-
-    #     while laps_counter < laps:
-    #         if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
-    #             lap_completed = True
-    #             laps_counter += 1
-    #         elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
-    #             lap_completed = False
-
-    #     return (time.time() - start_time)/laps
 
     def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
-
-        # print("Calculating average time per lap...")
-
-        # average_lap_time_max_speed = self.__find_max_speed(rotation_dir)
 
         pulse_width_step = 1
 
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
+            max_pulse_width = self.__max_cw_pw
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
+            max_pulse_width = self.__max_ccw_pw
 
         laps = 10
         laps_counter = 0
         lap_completed = False
-
-        # average_lap_time = average_lap_time_max_speed
-
-        # print("Average time per lap at maximum speed:", round(average_lap_time_max_speed, 4), "s")
 
         pulse_width = safe_limit_pulse_width
 
@@ -268,10 +233,13 @@ class Parallax:
             if laps_counter == laps - 1:
                 average_lap_time = (time.time() - start_time)/laps
                 if average_lap_time_max_speed is not None:
-                    if average_lap_time/average_lap_time_max_speed >= 1.03: break
+                    if pulse_width <= max_pulse_width:
+                        speeds.append(average_lap_time)
+                    else:
+                        average_lap_time_max_speed = sum(speeds)/len(speeds)
+                        if average_lap_time/average_lap_time_max_speed >= 1.03: break
                 else:
-                    average_lap_time_max_speed = average_lap_time
-                    print("avg time per lap at maximun speed:", round(average_lap_time_max_speed, 4), "s")
+                    speeds = []
                 pulse_width += pulse_width_step
                 laps_counter = 0
                 lap_completed = False
