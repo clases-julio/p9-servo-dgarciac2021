@@ -43,10 +43,10 @@ def draw_gauge(value):
     max = 100 / 10
 
     print("min ||", end="")
-    for i in range (min, value):
+    for i in range (min, value/10):
         print(" ", end="")
     print("^", end="")
-    for i in range (value+1, max):
+    for i in range (value/10+1, max):
         print(" ", end="")
     print("|| max", end="\r")
 
