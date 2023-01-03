@@ -12,7 +12,7 @@
 # Neccesary modules
 
 import signal
-import sys
+import sys, tty, termios
 import time
 import parallax
 
@@ -25,6 +25,9 @@ feedback_pin = 15
 ###############################################################################
 # Global variables
 
+filedescriptors = termios.tcgetattr(sys.stdin)
+tty.setcbreak(sys.stdin)
+
 myParallax = parallax.Parallax(control_pin, feedback_pin)
 
 ###############################################################################
@@ -32,6 +35,7 @@ myParallax = parallax.Parallax(control_pin, feedback_pin)
 
 def callbackExit(signal, frame): # signal and frame when the interrupt was executed.
     myParallax.destroy()
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, filedescriptors)
     sys.exit(0)
 
 ###############################################################################
@@ -39,19 +43,9 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 
 if __name__ == '__main__':
 
-    myParallax.run(1)
-
-    time.sleep(5)
-
-    myParallax.calibrate()
-
-    time.sleep(5)
-
-    myParallax.run(1)
-
-    time.sleep(5)
-
-    myParallax.stop()
+    #myParallax.calibrate()
 
     while True:
+        x=sys.stdin.read(1)[0]
+        print("You pressed", x)
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
