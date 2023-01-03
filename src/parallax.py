@@ -225,7 +225,7 @@ class Parallax:
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
 
-            print("Lap", laps_counter, "of", laps, end="\r")
+            #print("Lap", laps_counter, "of", laps, end="\r")
 
         return (time.time() - start_time)/laps
 
@@ -296,14 +296,14 @@ class Parallax:
 
         start_timestamp = time.time()
 
-        self.__getFeedbackDCBounds()
+        #self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        self.__find_stop_boundaries()
+        #self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
