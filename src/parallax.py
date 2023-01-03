@@ -271,7 +271,7 @@ class Parallax:
                     if average_lap_time/average_lap_time_max_speed >= 1.03: break
                 else:
                     average_lap_time_max_speed = average_lap_time
-                    print("Max speed:", round(average_lap_time_max_speed, 4), "s")
+                    print("avg time per lap at maximun speed:", round(average_lap_time_max_speed, 4), "s")
                 pulse_width += pulse_width_step
                 laps_counter = 0
                 lap_completed = False
@@ -298,14 +298,14 @@ class Parallax:
 
         start_timestamp = time.time()
 
-        #self.__getFeedbackDCBounds()
+        self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        #self.__find_stop_boundaries()
+        self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
