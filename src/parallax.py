@@ -95,9 +95,8 @@ class Parallax:
         # the final pulse width will depend on the rotation direction.
 
         if(self.rotation_direction is self.CLOCKWISE):
-            max = self.__max_cw_pw
-            min = self.__min_cw_pw
-            print("Hello")
+            max = self.__min_cw_pw
+            min = self.__max_cw_pw
         elif(self.rotation_direction is self.COUNTER_CLOCKWISE):
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
