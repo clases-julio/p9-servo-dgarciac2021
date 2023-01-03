@@ -194,11 +194,37 @@ class Parallax:
     
     def __find_max_speed(self, rotation_dir = CLOCKWISE):
 
+        pulse_width_step = 1
+
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
+
+        laps = 10
+        laps_counter = 0
+        lap_completed = False
+
+        self.__run_and_wait(safe_limit_pulse_width)
+
+        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        while start_feedback_duty_cycle == 0.0:
+            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        time.sleep(2.5)
+
+        start_time = time.time()
+
+        while laps_counter < laps - 1:
+            if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
+                lap_completed = True
+                laps_counter += 1
+            elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
+                lap_completed = False
+
+        return (time.time() - start_time)/laps
 
 
     def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
@@ -280,7 +306,7 @@ class Parallax:
         if rotation_dir is self.CLOCKWISE:
             print("Clockwise done!")
             # self.__max_cw_pw = pulse_width - pulse_width_step
-            # self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
+            self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             print("Counter-clockwise done!")
             # self.__max_ccw_pw = pulse_width - pulse_width_step
