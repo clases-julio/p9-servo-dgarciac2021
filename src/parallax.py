@@ -227,7 +227,7 @@ class Parallax:
                 laps_counter += 1
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
-            
+
             print("Lap", laps_counter, "of", laps, end="\r")
 
         return (time.time() - start_time)/laps
@@ -235,42 +235,23 @@ class Parallax:
 
     def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
 
-        self.__find_max_speed(rotation_dir)
+        average_lap_time_max_speed = self.__find_max_speed(rotation_dir)
 
-        # pulse_width_step = 1
+        pulse_width_step = 1
 
-        # if rotation_dir is self.CLOCKWISE:
-        #     safe_limit_pulse_width = self.__max_cw_pw * 0.995
-        # elif rotation_dir is self.COUNTER_CLOCKWISE:
-        #     pulse_width_step *= -1
-        #     safe_limit_pulse_width = self.__max_ccw_pw * 1.005
+        if rotation_dir is self.CLOCKWISE:
+            safe_limit_pulse_width = self.__max_cw_pw * 0.995
+        elif rotation_dir is self.COUNTER_CLOCKWISE:
+            pulse_width_step *= -1
+            safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        # laps = 10
-        # laps_counter = 0
-        # lap_completed = False
+        laps = 10
+        laps_counter = 0
+        lap_completed = False
 
-        # self.__run_and_wait(safe_limit_pulse_width)
+        average_lap_time = average_lap_time_max_speed
 
-        # start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        # while start_feedback_duty_cycle == 0.0:
-        #     start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        # time.sleep(5)
-
-        # start_time = time.time()
-
-        # while laps_counter < laps - 1:
-        #     if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
-        #         lap_completed = True
-        #         laps_counter += 1
-        #     elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
-        #         lap_completed = False
-
-        # average_lap_time_max_speed = (time.time() - start_time)/laps
-        # average_lap_time = average_lap_time_max_speed
-
-        # print("Average time per lap at maximum speed", round(average_lap_time_max_speed, 4), "s")
+        print("Average time per lap at maximum speed", round(average_lap_time_max_speed, 4), "s")
 
         # pulse_width = safe_limit_pulse_width
         # print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
