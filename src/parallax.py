@@ -21,12 +21,12 @@ import math
 
 class Parallax:
 
-    class __DirOfRot(Enum): # Intended to hold a human-readable value
+    class __dir_of_rot(Enum): # Intended to hold a human-readable value
         CLOCKWISE = 0
         COUNTER_CLOCKWISE = 1
 
-    CLOCKWISE = __DirOfRot.CLOCKWISE
-    COUNTER_CLOCKWISE = __DirOfRot.COUNTER_CLOCKWISE
+    CLOCKWISE = __dir_of_rot.CLOCKWISE
+    COUNTER_CLOCKWISE = __dir_of_rot.COUNTER_CLOCKWISE
 
     # VALUES BELOW ARE EXTRACTED FROM SERVO'S DATASHEET #
 
@@ -48,16 +48,16 @@ class Parallax:
 
     # VALUES ABOVE ARE EXTRACTED FROM SERVO'S DATASHEET #
 
-    def __init__(self, cPin, fPin):
+    def __init__(self, c_pin, f_pin):
 
-        self.controlPin = cPin
-        self.feedbackPin = fPin
+        self.control_pin = c_pin
+        self.feedback_pin = f_pin
 
         # Default turn direction will be clockwise
         # CAUTION: Speed calculations (A.K.A. pulse width) will be influenced by this value
         # since upper and lower limits might vary from one direction to another.
 
-        self.turnDirection = self.CLOCKWISE 
+        self.rotation_direction = self.CLOCKWISE 
 
         # A linear value which normalizes the spectrum from lower to upper
         # limit from 0 (excluded) to 100 (included)
@@ -65,11 +65,11 @@ class Parallax:
         self.__power = 0
 
         self.__pi = pigpio.pi()
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0) # Ensure that the control pin is low
+        self.__pi.set_servo_pulsewidth(self.control_pin, 0) # Ensure that the control pin is low
 
         # This object will track the feedback pin
 
-        self.__feedbackReader = read_PWM.reader(self.__pi, self.feedbackPin)
+        self.__feedback_reader = read_PWM.reader(self.__pi, self.feedback_pin)
 
     def __del__(self):
         # Only "destroy" the object if it exists, since "destroy()" might be called before the
@@ -81,11 +81,11 @@ class Parallax:
     def destroy(self):
         # Stops the servo and calls the default destructors of classes involved.
 
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
-        self.__feedbackReader.cancel()
+        self.__pi.set_servo_pulsewidth(self.control_pin, 0)
+        self.__feedback_reader.cancel()
         self.__pi.stop()
 
-    def __calculatePulseWidth(self, power):
+    def __calculate_pulse_width(self, power):
 
         if power == 0: # Will return a "safe" pulse width right in the middle of the "stop "
             return round((self.__min_cw_pw + self.__min_ccw_pw) / 2)
@@ -94,10 +94,10 @@ class Parallax:
         # and so will be the final result. This means that for the same "power" given,
         # the final pulse width will depend on the rotation direction.
 
-        if(self.turnDirection is self.CLOCKWISE):
+        if(self.rotation_direction is self.CLOCKWISE):
             max = self.__max_cw_pw
             min = self.__min_cw_pw
-        elif(self.turnDirection is self.COUNTER_CLOCKWISE):
+        elif(self.rotation_direction is self.COUNTER_CLOCKWISE):
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
         
@@ -105,7 +105,7 @@ class Parallax:
 
         return round((min + (((max - min) / 100.0) * power)))
 
-    def setPower(self, power, auto_refresh = False):
+    def set_power(self, power, auto_refresh = False):
 
         self.__power = power
 
@@ -116,18 +116,18 @@ class Parallax:
         if auto_refresh is True:
             self.run()
 
-    def getPower(self):
+    def get_power(self):
         return self.__power
 
-    def setRotationDir(self, rotation_dir):
-        self.rotationDirection = rotation_dir
+    def set_rotation_direction(self, rotation_dir):
+        self.rotation_direction = rotation_dir
 
-    def getFeedbackDutyCycle(self):
+    def get_feedback_duty_cycle(self):
         # The reader class built on the constructor allows to read the duty cycle of the feedback pin.
         # This might be used from outside the class for positioning purposes, although it is also internally
         # used for the calibration procedure.
 
-        return round(self.__feedbackReader.duty_cycle(), 2)
+        return round(self.__feedback_reader.duty_cycle(), 2)
 
     def run(self, power = None):
         # By default, the run() method will take the power attribute to calculate the final pulse width.
@@ -136,7 +136,12 @@ class Parallax:
         if power is not None:
             self.__power = power
 
-        self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculatePulseWidth(self.__power))
+        if power > 0:
+            self.rotation_direction = self.CLOCKWISE
+        elif power < 0:
+            self.rotation_direction = self.COUNTER_CLOCKWISE
+
+        self.__pi.set_servo_pulsewidth(self.control_pin, self.__calculate_pulse_width(self.__power))
 
     def stop(self):
         # Following the method calls, a procedure which will return a safe pulse width inside the "stop zone"
@@ -151,13 +156,13 @@ class Parallax:
         # Applies the changes only when it is necessary, and waits for them to be applied before continue.
         # This is used on the calibration procedure.
 
-        if pulse_width != self.__pi.get_servo_pulsewidth(self.controlPin):
-                self.__pi.set_servo_pulsewidth(self.controlPin, pulse_width)
+        if pulse_width != self.__pi.get_servo_pulsewidth(self.control_pin):
+                self.__pi.set_servo_pulsewidth(self.control_pin, pulse_width)
 
-                while self.__pi.get_servo_pulsewidth(self.controlPin) != pulse_width:
+                while self.__pi.get_servo_pulsewidth(self.control_pin) != pulse_width:
                     pass
 
-    def __getFeedbackDCBounds(self):
+    def __get_feedback_dc_bounds(self):
 
         # Safe values where the servo speed will be close to slowest and quickest possible.
         # Counter-clockwise is choosen since both upper and lower pulse width limits will be 
@@ -186,7 +191,7 @@ class Parallax:
         time_milestone = time.time() # Sets a milestone to keep track of the test time.
 
         while time.time() - time_milestone < test_timeout: # While the time has not expired...
-            feedback_sample = round(self.__feedbackReader.duty_cycle(), 2) # Take a feedback duty cycle sample.
+            feedback_sample = round(self.__feedback_reader.duty_cycle(), 2) # Take a feedback duty cycle sample.
 
             if feedback_sample != 0.0: # If that sample is not zero...
                 if feedback_sample < lower_dc_bound or feedback_sample > upper_dc_bound: # and its inside the "slow zone" ...
@@ -230,7 +235,7 @@ class Parallax:
         static_feedback_time_milestone = time.time() # Time milestone used as a timer.
 
         while time.time() - static_feedback_time_milestone < static_feedback_time: # Take as many samples as possible
-            static_feedback_samples.append(self.getFeedbackDutyCycle())
+            static_feedback_samples.append(self.get_feedback_duty_cycle())
 
         static_average_feedback = sum(static_feedback_samples)/len(static_feedback_samples)
 
@@ -240,7 +245,7 @@ class Parallax:
         pulse_width = safe_stop_pulse_width
         print("Trying with", pulse_width, "μs pulse width...", end="\r")
 
-        while math.isclose(self.getFeedbackDutyCycle(), static_average_feedback, abs_tol=1.0):
+        while math.isclose(self.get_feedback_duty_cycle(), static_average_feedback, abs_tol=1.0):
             # The hall sensor is very sensitive once the servo starts moving, so feedback samples will be taken continously
             # until there is a difference greater than a given value.
 
@@ -298,13 +303,13 @@ class Parallax:
 
         self.__run_and_wait(pulse_width)
 
-        start_feedback_duty_cycle = self.getFeedbackDutyCycle() # The "home" position will be the current position of the axle.
+        start_feedback_duty_cycle = self.get_feedback_duty_cycle() # The "home" position will be the current position of the axle.
 
         # Waits until the feedback returns a number which is not zero. The reader class needs the servo to be running
         # to set some values before returning valid values, otherwise it returns 0.
 
         while start_feedback_duty_cycle == 0.0:
-            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+            start_feedback_duty_cycle = self.get_feedback_duty_cycle()
 
         # Timer parameters
 
@@ -319,10 +324,10 @@ class Parallax:
             # could mean a full lap. A flag is set as soon as the first value above the start position is readed,
             # and reseted as soon as the first value below the start position is readed. This "flanges" are count as one lap.
 
-            if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
+            if lap_completed is False and self.get_feedback_duty_cycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
-            elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
+            elif lap_completed is True and self.get_feedback_duty_cycle() < start_feedback_duty_cycle:
                 lap_completed = False
 
             if laps_counter == laps - 1: # Once the target laps are reached...
@@ -352,10 +357,10 @@ class Parallax:
                 
                 self.__run_and_wait(pulse_width)
                 
-                start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+                start_feedback_duty_cycle = self.get_feedback_duty_cycle()
                 
                 while start_feedback_duty_cycle == 0.0:
-                    start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+                    start_feedback_duty_cycle = self.get_feedback_duty_cycle()
                 
                 start_time = time.time()
 
@@ -379,7 +384,7 @@ class Parallax:
 
         start_timestamp = time.time()
 
-        self.__getFeedbackDCBounds()
+        self.__get_feedback_dc_bounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")

@@ -81,12 +81,7 @@ if __name__ == '__main__':
         elif key_pressed is 'd':
             if power < MAX_POWER:
                 power += 1
-        
-        if power > 0:
-            myParallax.setRotationDir(myParallax.CLOCKWISE)
-        elif power < 0:
-            myParallax.setRotationDir(myParallax.COUNTER_CLOCKWISE)
 
-        myParallax.run(abs(power))
+        myParallax.run(power)
 
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
