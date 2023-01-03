@@ -38,6 +38,19 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
     termios.tcsetattr(sys.stdin, termios.TCSADRAIN, filedescriptors)
     sys.exit(0)
 
+def draw_gauge(value):
+    min = -100
+    max = 100
+
+    print("min ||", end="")
+    for i in range (min, value):
+        print(" ", end="")
+    print(value, end="")
+    for i in range (value+1, max):
+        print(" ", end="")
+    print("|| max", end="\r")
+
+
 ###############################################################################
 # Main program
 
@@ -55,7 +68,7 @@ if __name__ == '__main__':
         elif key_pressed is 'd':
             power += 1
 
-        print(power, end="\r")
+        draw_gauge(power)
 
         myParallax.run(power)
 
