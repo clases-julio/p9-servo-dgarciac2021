@@ -95,14 +95,14 @@ class Parallax:
         # the final pulse width will depend on the rotation direction.
 
         if(self.rotation_direction is self.CLOCKWISE):
-            max = self.__min_cw_pw
-            min = self.__max_cw_pw
+            max = self.__max_cw_pw
+            min = self.__min_cw_pw
         elif(self.rotation_direction is self.COUNTER_CLOCKWISE):
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
         
         # Linear approximation. According to pigpio, pulse width should be between 500-2500 μs, thus the round.
-
+        print(round((min + (((max - min) / 100.0) * power))))
         return round((min + (((max - min) / 100.0) * power)))
 
     def set_power(self, power, auto_refresh = False):
