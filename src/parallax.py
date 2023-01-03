@@ -199,7 +199,7 @@ class Parallax:
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        laps = 20
+        laps = 10
         laps_counter = 0
         lap_completed = False
 
@@ -210,11 +210,7 @@ class Parallax:
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        print("Waiting to reach max speed...")
-
-        time.sleep(1.5)
-
-        print("Max speed reached! Calculating average time per lap...")
+        print("Calculating average time per lap...")
 
         start_time = time.time()
 
@@ -224,8 +220,6 @@ class Parallax:
                 laps_counter += 1
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
-
-            #print("Lap", laps_counter, "of", laps, end="\r")
 
         return (time.time() - start_time)/laps
 
