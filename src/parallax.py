@@ -225,9 +225,10 @@ class Parallax:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
-                print("Lap", laps_counter, "of", laps, end="\r")
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
+            
+            print("Lap", laps_counter, "of", laps, end="\r")
 
         return (time.time() - start_time)/laps
 
