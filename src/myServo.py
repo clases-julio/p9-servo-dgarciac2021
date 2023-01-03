@@ -45,7 +45,18 @@ if __name__ == '__main__':
 
     #myParallax.calibrate()
 
+    power = 0
+
     while True:
-        x=sys.stdin.read(1)[0]
-        print("You pressed", x)
+        key_pressed = sys.stdin.read(1)[0]
+
+        if key_pressed is 'a':
+            power -= 1
+        elif key_pressed is 'd':
+            power += 1
+
+        print(power, end="\r")
+
+        myParallax.run(power)
+
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
