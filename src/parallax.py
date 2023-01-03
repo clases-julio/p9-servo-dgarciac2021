@@ -103,7 +103,7 @@ class Parallax:
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
             print(round(interp(power,[1,100],[min,max])))
-            print(round(interp(power,[100,1],[min,max])))
+            print(round(interp(power,[100,1],[max,min])))
             return round(interp(power,[1,100],[min,max]))
 
         # Linear approximation. According to pigpio, pulse width should be between 500-2500 μs, thus the round.
