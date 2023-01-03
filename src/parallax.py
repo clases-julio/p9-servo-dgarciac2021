@@ -266,7 +266,7 @@ class Parallax:
             if laps_counter == laps - 1:
                 average_lap_time = (time.time() - start_time)/laps
                 if average_lap_time_max_speed is not None:
-                    if average_lap_time/average_lap_time_max_speed >= 1.05: break
+                    if average_lap_time/average_lap_time_max_speed >= 1.03: break
                 else:
                     average_lap_time_max_speed = average_lap_time
                     print("Max speed:", round(average_lap_time_max_speed, 4), "s")
