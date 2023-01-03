@@ -102,8 +102,9 @@ class Parallax:
             min = self.__min_ccw_pw
         
         # Linear approximation. According to pigpio, pulse width should be between 500-2500 μs, thus the round.
-        print(round((min + (((max - min) / 100.0) * power))))
-        return round((min + (((max - min) / 100.0) * power)))
+        m = (max - min) / 100.0
+        print(round((max + m * (power-100.0))))
+        return 0
 
     def set_power(self, power, auto_refresh = False):
 
