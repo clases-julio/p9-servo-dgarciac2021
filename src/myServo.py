@@ -44,11 +44,12 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 def draw_gauge(value):
     value_length = len(str(value))
     start_str = "min |"
-    end_str = "| max"
+    end_str = "| max (Power: " + str(value) + ")"
     max_width = 80 - (len(start_str) + len(end_str))
     represented_value = round(max_width * ((value - MIN_POWER)/(MAX_POWER - MIN_POWER)))
 
     print(start_str, end="")
+
     for i in range (0, max_width + 1):
         if i == represented_value:
             print("^", end="")
