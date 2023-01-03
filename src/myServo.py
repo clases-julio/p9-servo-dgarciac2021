@@ -45,7 +45,9 @@ def draw_gauge(value):
     start_str = "min |"
     end_str = "| max (Power: " + str(value) + "%)"
 
-    max_width = 80 - (len(start_str) + len(end_str))
+    total_char_count = 80
+
+    max_width = total_char_count - (len(start_str) + len(end_str))
 
     represented_value = round(max_width * ((value - MIN_POWER)/(MAX_POWER - MIN_POWER)))
 
@@ -65,7 +67,7 @@ def draw_gauge(value):
 
 if __name__ == '__main__':
 
-    #myParallax.calibrate()
+    myParallax.calibrate()
 
     print("\nServo control:\n\t- 'd' for clockwise\n\t- 'a' for counter-clockwise\n\t- 'ctrl+c' to exit\n")
 
