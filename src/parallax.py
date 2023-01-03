@@ -221,15 +221,13 @@ class Parallax:
 
         if rotation_dir is self.CLOCKWISE: # The pulse width step should be negative in clockswise direction.
             pulse_width_step *= -1
-        
+
+        self.__run_and_wait(safe_stop_pulse_width)
+
         static_feedback_time = 1.0 # Time while feedback samples will be taken with the servo totally stopped in the current position.
         static_feedback_time_milestone = time.time() # Time milestone used as a timer.
 
         static_feedback_samples = []
-
-        self.__run_and_wait(safe_stop_pulse_width)
-
-        time.sleep(1)
 
         while time.time() - static_feedback_time_milestone < static_feedback_time: # Take as many samples as possible
             static_feedback_samples.append(self.getFeedbackDutyCycle())
