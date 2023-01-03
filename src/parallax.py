@@ -229,6 +229,8 @@ class Parallax:
 
         self.__run_and_wait(safe_stop_pulse_width)
 
+        time.sleep(1)
+
         while time.time() - static_feedback_time_milestone < static_feedback_time: # Take as many samples as possible
             static_feedback_samples.append(self.getFeedbackDutyCycle())
 
