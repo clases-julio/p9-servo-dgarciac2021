@@ -28,7 +28,7 @@ feedback_pin = 15
 MAX_POWER = 100
 MIN_POWER = MAX_POWER * -1
 
-filedescriptors = termios.tcgetattr(sys.stdin)
+fd = termios.tcgetattr(sys.stdin)
 tty.setcbreak(sys.stdin)
 
 myParallax = parallax.Parallax(control_pin, feedback_pin)
@@ -38,20 +38,22 @@ myParallax = parallax.Parallax(control_pin, feedback_pin)
 
 def callbackExit(signal, frame): # signal and frame when the interrupt was executed.
     myParallax.destroy()
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, filedescriptors)
+    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, fd)
     sys.exit(0)
 
 def draw_gauge(value):
     start_str = "min |"
     end_str = "| max (Power: " + str(value) + "%)"
+
     max_width = 80 - (len(start_str) + len(end_str))
+
     represented_value = round(max_width * ((value - MIN_POWER)/(MAX_POWER - MIN_POWER)))
 
     print(start_str, end="")
 
     for i in range (0, max_width + 1):
         if i == represented_value:
-            print("^", end="")
+            print("¤", end="")
         else:
             print(" ", end="")
 
@@ -65,9 +67,9 @@ if __name__ == '__main__':
 
     myParallax.calibrate()
 
-    power = 0
-
     print("\nServo control:\n\t- 'd' for clockwise\n\t- 'a' for counter-clockwise\n\t- 'ctrl+c' to exit\n")
+
+    power = 0
 
     while True:
 
