@@ -99,6 +99,7 @@ class Parallax:
 
     def __calculate_pulse_width(self, power):
 
+        print(power)
         if power == 0: # Will return a "safe" pulse width right in the middle of the "stop "
             return round((self.__min_cw_pw + self.__min_ccw_pw) / 2)
 
