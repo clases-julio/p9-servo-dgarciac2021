@@ -65,6 +65,10 @@ class Parallax:
         return round(((pulse_width/(self.__PWM_PERIOD * 10 ** 6)) * 100.0), 2) 
 
     def __calculatePulseWidth(self, power):
+
+        if power == 0:
+            return (self.__min_cw_pw + self.__min_ccw_pw) / 2
+
         if(self.turnDirection is self.CLOCKWISE):
             max = self.__max_cw_pw
             min = self.__min_cw_pw
@@ -93,11 +97,10 @@ class Parallax:
         if power is None:
             power = self.__power
 
-        power = round(power)
         self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculateDutyCycle(self.__calculatePulseWidth(power)))
 
     def stop(self):
-        self.__pi.set_servo_pulsewidth(self.controlPin, 0)
+        self.run(0)
 
     def __run_and_wait(self, pulse_width):
         pulse_width = round(pulse_width)
