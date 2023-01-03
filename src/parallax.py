@@ -296,7 +296,11 @@ class Parallax:
 
         pulse_width = safe_limit_pulse_width
 
+        print("Hello")
+
         self.__run_and_wait(pulse_width)
+
+        print("Hello")
 
         start_feedback_duty_cycle = self.getFeedbackDutyCycle() # The "home" position will be the current position of the axle.
 
@@ -305,8 +309,6 @@ class Parallax:
 
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        time.sleep(2)
 
         # Timer parameters
 
@@ -317,7 +319,10 @@ class Parallax:
 
         while True: # The loop will be broken eventually
             # The duty cycle loops between 0 and 100% (Actually the real limits are set on the datahseet/calibration procedure)
-            # The start point will be randomly at any value between those limits. Reading values above or below 
+            # The start point will be randomly at any value between those limits. Reading values above or below this position
+            # could mean a full lap. A flag is set as soon as the first value above the start position is readed,
+            # and reseted as soon as the first value below the start position is readed. This "flanges" are count as a lap.
+
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
