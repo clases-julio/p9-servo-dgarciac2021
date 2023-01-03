@@ -237,7 +237,7 @@ class Parallax:
 
         average_lap_time_max_speed = self.__find_max_speed(rotation_dir)
 
-        pulse_width_step = 1
+        pulse_width_step = 5
 
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
