@@ -134,7 +134,7 @@ class Parallax:
         # However this might be overwritten if a power is parsed, which will overwrite the attribute itself.
 
         if power is not None:
-            self.__power = power
+            self.__power = abs(power)
 
         self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculatePulseWidth(self.__power))
 

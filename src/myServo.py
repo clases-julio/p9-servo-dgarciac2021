@@ -44,7 +44,7 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 def draw_gauge(value):
     start_str = "min |"
     end_str = "| max (Power: " + str(value) + "%)"
-    max_width = 100 - (len(start_str) + len(end_str))
+    max_width = 80 - (len(start_str) + len(end_str))
     represented_value = round(max_width * ((value - MIN_POWER)/(MAX_POWER - MIN_POWER)))
 
     print(start_str, end="")
@@ -81,7 +81,12 @@ if __name__ == '__main__':
         elif key_pressed is 'd':
             if power < MAX_POWER:
                 power += 1
+        
+        if power > 0:
+            myParallax.setRotationDir(myParallax.CLOCKWISE)
+        elif power < 0:
+            myParallax.setRotationDir(myParallax.COUNTER_CLOCKWISE)
 
-        myParallax.run(power)
+        myParallax.run(abs(power))
 
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
