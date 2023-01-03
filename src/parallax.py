@@ -85,6 +85,17 @@ class Parallax:
         self.__pi.set_servo_pulsewidth(self.control_pin, 0)
         self.__feedback_reader.cancel()
         self.__pi.stop()
+    
+    def translate(value, leftMin, leftMax, rightMin, rightMax):
+        # Figure out how 'wide' each range is
+        leftSpan = leftMax - leftMin
+        rightSpan = rightMax - rightMin
+
+        # Convert the left range into a 0-1 range (float)
+        valueScaled = float(value - leftMin) / float(leftSpan)
+
+        # Convert the 0-1 range into a value in the right range.
+        return rightMin + (valueScaled * rightSpan)
 
     def __calculate_pulse_width(self, power):
 
@@ -102,8 +113,7 @@ class Parallax:
         elif(self.rotation_direction is self.COUNTER_CLOCKWISE):
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
-            print(round(interp(power,[1,100],[min,max])))
-            print(round(interp(power,[100,1],[max,min])))
+            print(self.translate(power, 1, 100, min, max))
             return round(interp(power,[1,100],[min,max]))
 
         # Linear approximation. According to pigpio, pulse width should be between 500-2500 μs, thus the round.
