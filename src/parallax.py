@@ -146,7 +146,7 @@ class Parallax:
         
         self.__min_fb_dc = min_dc
         self.__max_fb_dc = max_dc
-    
+
     def __find_stop_boundaries(self, rotation_dir = CLOCKWISE):
 
         safe_stop_pulse_width = round((self.__min_cw_pw + self.__min_ccw_pw)/2)
@@ -194,15 +194,12 @@ class Parallax:
     
     def __find_max_speed(self, rotation_dir = CLOCKWISE):
 
-        pulse_width_step = 5
-
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
         elif rotation_dir is self.COUNTER_CLOCKWISE:
-            pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        laps = 10
+        laps = 20
         laps_counter = 0
         lap_completed = False
 
@@ -215,7 +212,7 @@ class Parallax:
 
         print("Waiting to reach max speed...")
 
-        time.sleep(5)
+        time.sleep(1.5)
 
         print("Max speed reached! Calculating average time per lap...")
 
@@ -232,12 +229,11 @@ class Parallax:
 
         return (time.time() - start_time)/laps
 
-
     def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
 
         average_lap_time_max_speed = self.__find_max_speed(rotation_dir)
 
-        pulse_width_step = 5
+        pulse_width_step = 1
 
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
@@ -293,9 +289,6 @@ class Parallax:
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             print("Counter-clockwise done!")
             self.__max_ccw_pw = round(pulse_width - pulse_width_step)
-
-
-
 
     def calibrate(self):
 
