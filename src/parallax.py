@@ -97,7 +97,7 @@ class Parallax:
         if(self.turnDirection is self.CLOCKWISE):
             max = self.__max_cw_pw
             min = self.__min_cw_pw
-        if(self.turnDirection is self.COUNTER_CLOCKWISE):
+        elif(self.turnDirection is self.COUNTER_CLOCKWISE):
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
         
@@ -134,7 +134,7 @@ class Parallax:
         # However this might be overwritten if a power is parsed, which will overwrite the attribute itself.
 
         if power is not None:
-            self.__power = abs(power)
+            self.__power = power
 
         self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculatePulseWidth(self.__power))
 

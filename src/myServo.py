@@ -63,7 +63,7 @@ def draw_gauge(value):
 
 if __name__ == '__main__':
 
-    myParallax.calibrate()
+    #myParallax.calibrate()
 
     power = 0
 
