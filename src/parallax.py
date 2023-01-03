@@ -76,7 +76,7 @@ class Parallax:
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
 
-        return round((min + (((max - min) / 100.0) * power)), 2)
+        return round((min + (((max - min) / 100.0) * power)))
 
     def setPower(self, power, auto_refresh = False):
         power = round(power)
@@ -97,7 +97,7 @@ class Parallax:
         if power is None:
             power = self.__power
 
-        self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculateDutyCycle(self.__calculatePulseWidth(power)))
+        self.__pi.set_servo_pulsewidth(self.controlPin, self.__calculatePulseWidth(power))
 
     def stop(self):
         self.run(0)
