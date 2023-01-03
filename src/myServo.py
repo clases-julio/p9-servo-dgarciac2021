@@ -60,6 +60,9 @@ if __name__ == '__main__':
     power = 0
 
     while True:
+
+        draw_gauge(power)
+
         key_pressed = sys.stdin.read(1)[0]
 
         if key_pressed is 'a':
@@ -68,8 +71,6 @@ if __name__ == '__main__':
         elif key_pressed is 'd':
             if power < 100:
                 power += 1
-
-        draw_gauge(power)
 
         myParallax.run(power)
 
