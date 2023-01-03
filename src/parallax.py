@@ -219,6 +219,7 @@ class Parallax:
 
         time.sleep(2)
 
+        avg_time_laps_at_max = []
         average_lap_time_max_speed = None
 
         start_time = time.time()
@@ -232,14 +233,11 @@ class Parallax:
 
             if laps_counter == laps - 1:
                 average_lap_time = (time.time() - start_time)/laps
-                if average_lap_time_max_speed is not None:
-                    if pulse_width <= max_pulse_width:
-                        speeds.append(average_lap_time)
-                    else:
-                        average_lap_time_max_speed = sum(speeds)/len(speeds)
-                        if average_lap_time/average_lap_time_max_speed >= 1.03: break
-                else:
-                    speeds = []
+                if pulse_width is max_pulse_width and average_lap_time_max_speed is None:
+                    avg_time_laps_at_max.append(average_lap_time)
+                    average_lap_time_max_speed = sum(avg_time_laps_at_max)/len(avg_time_laps_at_max)
+                    print("avg time per lap at maximun speed:", average_lap_time_max_speed)
+                elif average_lap_time_max_speed is not None and average_lap_time/average_lap_time_max_speed >= 1.03: break
                 pulse_width += pulse_width_step
                 laps_counter = 0
                 lap_completed = False
