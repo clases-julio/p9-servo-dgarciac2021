@@ -199,7 +199,7 @@ class Parallax:
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        laps = 10
+        laps = 30
         laps_counter = 0
         lap_completed = False
 
@@ -209,8 +209,6 @@ class Parallax:
 
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        print("Calculating average time per lap...")
 
         start_time = time.time()
 
@@ -224,6 +222,8 @@ class Parallax:
         return (time.time() - start_time)/laps
 
     def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
+
+        print("Calculating average time per lap...")
 
         average_lap_time_max_speed = self.__find_max_speed(rotation_dir)
 
