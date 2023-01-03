@@ -51,7 +51,7 @@ if __name__ == '__main__':
 
     time.sleep(5)
 
-    myParallax.destroy()
+    myParallax.stop()
 
     while True:
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
