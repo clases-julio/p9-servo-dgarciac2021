@@ -191,10 +191,8 @@ class Parallax:
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             print("Counter-clockwise done!")
             self.__min_ccw_pw = pulse_width
-
-    def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
-
-        pulse_width_step = 1
+    
+    def __find_max_speed(self, rotation_dir = CLOCKWISE):
 
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
@@ -202,77 +200,90 @@ class Parallax:
             pulse_width_step *= -1
             safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        laps = 10
-        laps_counter = 0
-        lap_completed = False
 
-        self.__run_and_wait(safe_limit_pulse_width)
+    def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
 
-        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        self.__find_max_speed(rotation_dir)
 
-        while start_feedback_duty_cycle == 0.0:
-            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        # pulse_width_step = 1
 
-        time.sleep(5)
+        # if rotation_dir is self.CLOCKWISE:
+        #     safe_limit_pulse_width = self.__max_cw_pw * 0.995
+        # elif rotation_dir is self.COUNTER_CLOCKWISE:
+        #     pulse_width_step *= -1
+        #     safe_limit_pulse_width = self.__max_ccw_pw * 1.005
 
-        start_time = time.time()
+        # laps = 10
+        # laps_counter = 0
+        # lap_completed = False
 
-        while laps_counter < laps - 1:
-            if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
-                lap_completed = True
-                laps_counter += 1
-            elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
-                lap_completed = False
+        # self.__run_and_wait(safe_limit_pulse_width)
 
-        average_lap_time_max_speed = (time.time() - start_time)/laps
-        average_lap_time = average_lap_time_max_speed
+        # start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        print("Average time per lap at maximum speed", round(average_lap_time_max_speed, 4), "s")
+        # while start_feedback_duty_cycle == 0.0:
+        #     start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        pulse_width = safe_limit_pulse_width
-        print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
+        # time.sleep(5)
 
-        laps_counter = 0
-        lap_completed = False
+        # start_time = time.time()
 
-        self.__run_and_wait(pulse_width)
+        # while laps_counter < laps - 1:
+        #     if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
+        #         lap_completed = True
+        #         laps_counter += 1
+        #     elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
+        #         lap_completed = False
 
-        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        # average_lap_time_max_speed = (time.time() - start_time)/laps
+        # average_lap_time = average_lap_time_max_speed
 
-        while start_feedback_duty_cycle == 0.0:
-            start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        # print("Average time per lap at maximum speed", round(average_lap_time_max_speed, 4), "s")
 
-        start_time = time.time()
+        # pulse_width = safe_limit_pulse_width
+        # print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", round(average_lap_time, 4), "s)", end="\r")
 
-        while True:
-            if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
-                lap_completed = True
-                laps_counter += 1
-            elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
-                lap_completed = False
+        # laps_counter = 0
+        # lap_completed = False
 
-            if laps_counter == laps - 1:
-                average_lap_time = (time.time() - start_time)/laps
-                pulse_width += pulse_width_step
-                #print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, "s)", end="\r")
-                print(average_lap_time/average_lap_time_max_speed)
-                laps_counter = 0
-                self.__run_and_wait(pulse_width)
-                start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-                while start_feedback_duty_cycle == 0.0:
-                    start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-                start_time = time.time()
-                lap_completed = False
+        # self.__run_and_wait(pulse_width)
 
-        print("                                                                                                  ", end="\r")
+        # start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        # while start_feedback_duty_cycle == 0.0:
+        #     start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+
+        # start_time = time.time()
+
+        # while True:
+        #     if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
+        #         lap_completed = True
+        #         laps_counter += 1
+        #     elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
+        #         lap_completed = False
+
+        #     if laps_counter == laps - 1:
+        #         average_lap_time = (time.time() - start_time)/laps
+        #         pulse_width += pulse_width_step
+        #         #print("Trying with", pulse_width, "μs pulse width... (avg time per lap =", average_lap_time, "s)", end="\r")
+        #         print(average_lap_time/average_lap_time_max_speed)
+        #         laps_counter = 0
+        #         self.__run_and_wait(pulse_width)
+        #         start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        #         while start_feedback_duty_cycle == 0.0:
+        #             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        #         start_time = time.time()
+        #         lap_completed = False
+
+        # print("                                                                                                  ", end="\r")
 
         if rotation_dir is self.CLOCKWISE:
             print("Clockwise done!")
-            self.__max_cw_pw = pulse_width - pulse_width_step
-            self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
+            # self.__max_cw_pw = pulse_width - pulse_width_step
+            # self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             print("Counter-clockwise done!")
-            self.__max_ccw_pw = pulse_width - pulse_width_step
+            # self.__max_ccw_pw = pulse_width - pulse_width_step
 
 
 
