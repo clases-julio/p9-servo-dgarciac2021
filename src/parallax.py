@@ -267,15 +267,28 @@ class Parallax:
 
     def __find_limit_boundaries(self, rotation_dir = CLOCKWISE):
 
-        pulse_width_step = 1
+        # The approach intended here is to run the servo a bit beyond its maximum limit
+        # (According to the datasheet, the servo will run at maximum speed constantly if the maximum limit is surpassed)
+        # then gradually reduce the pulse width until a noticeable change in axle speed is detected thanks to the feedback pin,
+        # meaning that the upper limit was the value RIGHT BEFORE that pulse width has been changed.
+
+        # The speed calculation is done by timing the servo to run over the same spot (A.K.A. the same Duty Cycle value on the feedback pin)
+        # Thus determining an average time per lap. If this time por lap is increased at a given time, will mean that the servo
+        # is slowing down.
+
+        pulse_width_step = 1 # The pulse width tested will be changed by this value each time
+
+        # Some parameters will differ from one rotation direction to another.
 
         if rotation_dir is self.CLOCKWISE:
-            safe_limit_pulse_width = self.__max_cw_pw * 0.995
+            safe_limit_pulse_width = self.__max_cw_pw * 0.995 # Subtly beyond the limit
             max_pulse_width = self.__max_cw_pw
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             pulse_width_step *= -1
-            safe_limit_pulse_width = self.__max_ccw_pw * 1.005
+            safe_limit_pulse_width = self.__max_ccw_pw * 1.005 # Subtly beyond the limit
             max_pulse_width = self.__max_ccw_pw
+
+        # Lap parameters
 
         laps = 10
         laps_counter = 0
@@ -285,12 +298,13 @@ class Parallax:
 
         self.__run_and_wait(pulse_width)
 
-        start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+        start_feedback_duty_cycle = self.getFeedbackDutyCycle() # The "home" position will be the current position of the axle.
+
+        # Waits until the feedback returns a number which is not zero. The reader class needs the servo to be running
+        # to set some values before returning valid values, otherwise it returns 0.
 
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
-
-        time.sleep(2)
 
         avg_time_laps_at_max = []
         average_lap_time_max_speed = None
