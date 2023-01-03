@@ -25,6 +25,9 @@ feedback_pin = 15
 ###############################################################################
 # Global variables
 
+MAX_POWER = 100
+MIN_POWER = MAX_POWER * -1
+
 filedescriptors = termios.tcgetattr(sys.stdin)
 tty.setcbreak(sys.stdin)
 
@@ -39,13 +42,14 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
     sys.exit(0)
 
 def draw_gauge(value):
-    represented_value = round(70 * ((value - (-100))/(100 - (-100))))
+    MAX_WIDTH = 80 - 5 - 5
+    represented_value = round(MAX_WIDTH * ((value - MIN_POWER)/(MAX_POWER - MIN_POWER)))
 
     print("min |", end="")
     for i in range (0, represented_value):
         print(" ", end="")
     print(value, end="")
-    for i in range (represented_value+1, 70):
+    for i in range (represented_value + len(value), MAX_WIDTH):
         print(" ", end="")
     print("| max", end="\r")
 
@@ -66,10 +70,10 @@ if __name__ == '__main__':
         key_pressed = sys.stdin.read(1)[0]
 
         if key_pressed is 'a':
-            if power > -100:
+            if power > MIN_POWER:
                 power -= 1
         elif key_pressed is 'd':
-            if power < 100:
+            if power < MAX_POWER:
                 power += 1
 
         myParallax.run(power)
