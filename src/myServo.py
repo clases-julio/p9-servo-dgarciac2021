@@ -42,7 +42,6 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
     sys.exit(0)
 
 def draw_gauge(value):
-    value_length = len(str(value))
     start_str = "min |"
     end_str = "| max (Power: " + str(value) + "%)"
     max_width = 100 - (len(start_str) + len(end_str))
@@ -67,6 +66,8 @@ if __name__ == '__main__':
     #myParallax.calibrate()
 
     power = 0
+
+    print("Servo control:\n\t- 'a' for clockwise\n\t- 'd' for counter-clockwise\n\t- 'ctrl+c' to exit")
 
     while True:
 
