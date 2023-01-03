@@ -292,3 +292,5 @@ class Parallax:
         print("Pulse width for maximum speed counter-clockwise:", self.__max_ccw_pw, "μs", end="\n\n")
 
         print("Calibration time:", round(time.time() - start_timestamp, 1), "s")
+
+        self.stop()

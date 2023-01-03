@@ -39,10 +39,12 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
 
 if __name__ == '__main__':
 
-    #myParallax.calibrate()
+    myParallax.run(1)
 
-    myParallax.run(50)
+    time.sleep(5)
 
+    myParallax.calibrate()
+    
     time.sleep(5)
 
     myParallax.run(1)
