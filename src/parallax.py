@@ -194,7 +194,7 @@ class Parallax:
     
     def __find_max_speed(self, rotation_dir = CLOCKWISE):
 
-        pulse_width_step = 1
+        pulse_width_step = 5
 
         if rotation_dir is self.CLOCKWISE:
             safe_limit_pulse_width = self.__max_cw_pw * 0.995
@@ -303,14 +303,14 @@ class Parallax:
 
         start_timestamp = time.time()
 
-        #self.__getFeedbackDCBounds()
+        self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        #self.__find_stop_boundaries()
+        self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
