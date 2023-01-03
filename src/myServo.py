@@ -63,7 +63,7 @@ def draw_gauge(value):
 
 if __name__ == '__main__':
 
-    #myParallax.calibrate()
+    myParallax.calibrate()
 
     power = 0
 
@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     while True:
 
-        #draw_gauge(power)
+        draw_gauge(power)
 
         key_pressed = sys.stdin.read(1)[0]
 
