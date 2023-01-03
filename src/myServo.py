@@ -57,9 +57,11 @@ if __name__ == '__main__':
         key_pressed = sys.stdin.read(1)[0]
 
         if key_pressed is 'a':
-            power -= 1
+            if power > -100:
+                power -= 1
         elif key_pressed is 'd':
-            power += 1
+            if power < 100:
+                power += 1
 
         draw_gauge(power)
 
