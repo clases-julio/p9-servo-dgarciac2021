@@ -39,16 +39,9 @@ def callbackExit(signal, frame): # signal and frame when the interrupt was execu
     sys.exit(0)
 
 def draw_gauge(value):
-    min = -100 / 10
-    max = 100 / 10
+    represented_value = 70 * ((value - (-100))/(100 - (-100)))
 
-    print("min ||", end="")
-    for i in range (min, value/10):
-        print(" ", end="")
-    print("^", end="")
-    for i in range (value/10+1, max):
-        print(" ", end="")
-    print("|| max", end="\r")
+    print(represented_value)
 
 
 ###############################################################################
