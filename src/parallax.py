@@ -224,10 +224,10 @@ class Parallax:
 
         self.__run_and_wait(safe_stop_pulse_width)
 
+        static_feedback_samples = []
+
         static_feedback_time = 1.0 # Time while feedback samples will be taken with the servo totally stopped in the current position.
         static_feedback_time_milestone = time.time() # Time milestone used as a timer.
-
-        static_feedback_samples = []
 
         while time.time() - static_feedback_time_milestone < static_feedback_time: # Take as many samples as possible
             static_feedback_samples.append(self.getFeedbackDutyCycle())
