@@ -213,7 +213,11 @@ class Parallax:
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
+        print("Waiting to reach max speed...")
+
         time.sleep(2.5)
+
+        print("Max speed reached!")
 
         start_time = time.time()
 
@@ -221,6 +225,7 @@ class Parallax:
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
+                print("Lap", laps_counter, "of", laps, end="\r")
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
 
