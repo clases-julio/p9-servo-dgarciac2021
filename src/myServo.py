@@ -44,18 +44,14 @@ if __name__ == '__main__':
     time.sleep(5)
 
     myParallax.calibrate()
-    
+
     time.sleep(5)
 
     myParallax.run(1)
 
     time.sleep(5)
 
-    myParallax.run(100)
-
-    time.sleep(5)
-
-    myParallax.stop()
+    myParallax.destroy()
 
     while True:
         signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
