@@ -47,7 +47,7 @@ def draw_gauge(value):
     print(value, end="")
     for i in range (represented_value+1, 70):
         print(" ", end="")
-    print("max", end="\r")
+    print("| max", end="\r")
 
 
 ###############################################################################
