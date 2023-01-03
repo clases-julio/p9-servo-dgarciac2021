@@ -63,11 +63,11 @@ def draw_gauge(value):
 
 if __name__ == '__main__':
 
-    #myParallax.calibrate()
+    myParallax.calibrate()
 
     power = 0
 
-    print("Servo control:\n\t- 'a' for clockwise\n\t- 'd' for counter-clockwise\n\t- 'ctrl+c' to exit")
+    print("Servo control:\n\t- 'd' for clockwise\n\t- 'a' for counter-clockwise\n\t- 'ctrl+c' to exit\n")
 
     while True:
 
