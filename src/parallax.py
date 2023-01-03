@@ -288,11 +288,11 @@ class Parallax:
 
         if rotation_dir is self.CLOCKWISE:
             print("Clockwise done!")
-            self.__max_cw_pw = pulse_width - pulse_width_step
+            self.__max_cw_pw = round(pulse_width - pulse_width_step)
             self.__find_limit_boundaries(self.COUNTER_CLOCKWISE)
         elif rotation_dir is self.COUNTER_CLOCKWISE:
             print("Counter-clockwise done!")
-            self.__max_ccw_pw = pulse_width - pulse_width_step
+            self.__max_ccw_pw = round(pulse_width - pulse_width_step)
 
 
 
