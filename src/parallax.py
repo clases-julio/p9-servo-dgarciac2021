@@ -244,7 +244,6 @@ class Parallax:
         # print("Average time per lap at maximum speed:", round(average_lap_time_max_speed, 4), "s")
 
         pulse_width = safe_limit_pulse_width
-        print("Trying with", pulse_width, "μs pulse width...", end="\r")
 
         self.__run_and_wait(pulse_width)
 
@@ -270,7 +269,7 @@ class Parallax:
                     if average_lap_time/average_lap_time_max_speed >= 1.05: break
                 else:
                     average_lap_time_max_speed = average_lap_time
-                    print("Max speed", average_lap_time_max_speed)
+                    print("Max speed:", round(average_lap_time_max_speed, 4), "s")
                 pulse_width += pulse_width_step
                 laps_counter = 0
                 lap_completed = False
