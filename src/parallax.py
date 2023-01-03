@@ -325,25 +325,45 @@ class Parallax:
             elif lap_completed is True and self.getFeedbackDutyCycle() < start_feedback_duty_cycle:
                 lap_completed = False
 
-            if laps_counter == laps - 1: # Once the laps
-                average_lap_time = (time.time() - start_time)/laps
+            if laps_counter == laps - 1: # Once the target laps are reached...
+                average_lap_time = (time.time() - start_time)/laps # The time per one lap is calculated
+
+                # All lap times are taken to calculate a median until the tested pulse width reaches the 
+                # theoretical maximum (Remember that the test started subtly beyond this maximum), then the lap time
+                # is compared to this median. Once the lap time increseases by a certain value, the loop is broken.
+
                 if round(pulse_width) == round(max_pulse_width) and average_lap_time_max_speed is None:
                     avg_time_laps_at_max.append(average_lap_time)
                     average_lap_time_max_speed = sum(avg_time_laps_at_max)/len(avg_time_laps_at_max)
                     print("avg time per lap at maximun speed:", round(average_lap_time_max_speed, 4), "s")
                 elif average_lap_time_max_speed is not None and average_lap_time/average_lap_time_max_speed >= 1.03: break
+
+                # If the loop is not broken by this line, then means that the speed remains constant and thus the next
+                # pulse width is being prepared.
+
+                # Resets lap parameters.
+
                 pulse_width += pulse_width_step
                 laps_counter = 0
                 lap_completed = False
+
                 if average_lap_time_max_speed is not None:
                     print("(avg time per lap =", round(average_lap_time, 4), "s)", "Trying with", round(pulse_width), "μs pulse width...", end="\r")
+                
                 self.__run_and_wait(pulse_width)
+                
                 start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+                
                 while start_feedback_duty_cycle == 0.0:
                     start_feedback_duty_cycle = self.getFeedbackDutyCycle()
+                
                 start_time = time.time()
 
         print("                                                                                                  ", end="\r")
+
+        # Since this procedure should be done in both directions, recursivity is used with a parameter
+        # indicating the rotation direction. Clockwise as default will be first, and then counter-clockwise.
+        # If counter-clockwise is called, then the recursive call stops.
 
         if rotation_dir is self.CLOCKWISE:
             print("Clockwise done!")
@@ -359,14 +379,14 @@ class Parallax:
 
         start_timestamp = time.time()
 
-        #self.__getFeedbackDCBounds()
+        self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        #self.__find_stop_boundaries()
+        self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
