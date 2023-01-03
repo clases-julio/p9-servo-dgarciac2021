@@ -99,7 +99,6 @@ class Parallax:
 
     def __calculate_pulse_width(self, power):
 
-        print(power)
         if power == 0: # Will return a "safe" pulse width right in the middle of the "stop "
             return round((self.__min_cw_pw + self.__min_ccw_pw) / 2)
 
@@ -110,15 +109,14 @@ class Parallax:
         if(self.rotation_direction is self.CLOCKWISE):
             max = self.__max_cw_pw
             min = self.__min_cw_pw
-            print(round(interp(power,[1,100],[min,max])))
-            return round(interp(power,[1,100],[min,max]))
+            
         elif(self.rotation_direction is self.COUNTER_CLOCKWISE):
             max = self.__max_ccw_pw
             min = self.__min_ccw_pw
-            print("Hello", round(interp(power,[1,100],[min,max])))
-            return round(interp(power,[1,100],[min,max]))
 
         # Linear approximation. According to pigpio, pulse width should be between 500-2500 μs, thus the round.
+
+        return round(interp(power,[1,100],[min,max]))
 
     def set_power(self, power, auto_refresh = False):
 
@@ -149,7 +147,7 @@ class Parallax:
         # However this might be overwritten if a power is parsed, which will overwrite the attribute itself.
 
         if power is not None:
-            self.__power = power
+            self.__power = abs(power)
 
         if power > 0:
             self.rotation_direction = self.CLOCKWISE
