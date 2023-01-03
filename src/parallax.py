@@ -359,14 +359,14 @@ class Parallax:
 
         start_timestamp = time.time()
 
-        self.__getFeedbackDCBounds()
+        #self.__getFeedbackDCBounds()
 
         print("Minimum feedback signal duty cycle readed:", self.__min_fb_dc, "%")
         print("Maximum feedback signal duty cycle readed:", self.__max_fb_dc, "%", end="\n\n")
 
         print("Finding stop boundaries...")
 
-        self.__find_stop_boundaries()
+        #self.__find_stop_boundaries()
 
         print("Stop boundaries found!")
 
