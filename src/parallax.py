@@ -252,7 +252,7 @@ class Parallax:
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
-        time.sleep(1)
+        time.sleep(2)
 
         average_lap_time_max_speed = None
 

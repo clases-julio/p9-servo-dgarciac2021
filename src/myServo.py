@@ -41,7 +41,5 @@ if __name__ == '__main__':
 
     myParallax.calibrate()
 
-    myParallax.__del__()
-
-    # while True:
-    #     signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
+    while True:
+        signal.signal(signal.SIGINT, callbackExit) # callback for CTRL+C
