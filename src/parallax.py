@@ -306,12 +306,18 @@ class Parallax:
         while start_feedback_duty_cycle == 0.0:
             start_feedback_duty_cycle = self.getFeedbackDutyCycle()
 
+        time.sleep(2)
+
+        # Timer parameters
+
         avg_time_laps_at_max = []
         average_lap_time_max_speed = None
 
         start_time = time.time()
 
-        while True:
+        while True: # The loop will be broken eventually
+            # The duty cycle loops between 0 and 100% (Actually the real limits are set on the datahseet/calibration procedure)
+            # The start point will be randomly at any value between those limits. Reading values above or below 
             if lap_completed is False and self.getFeedbackDutyCycle() >= start_feedback_duty_cycle:
                 lap_completed = True
                 laps_counter += 1
