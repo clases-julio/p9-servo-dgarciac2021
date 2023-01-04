@@ -18,7 +18,7 @@ You might want to take a look on the [wiki](https://github.com/clases-julio/p9-s
 
 We got a little bit creative (and destructive) here. The assembly will be so simple if only the wire order of the connector meets the GPIO order! You see, there's three pins in a row in the RPI which are 5V, GND and GPIO14 respectively. [We have already talked about GPIO's here](https://github.com/clases-julio/p1-introrpi-pwm-dgarciac2021/wiki/GPIO). There we see that those pins are **(BOARD mode!) numbers 4, 6 and 8.**
 
-However, the original connector of the servo comes in the following arrangement: VCC, Control Signal and GND. *Damnit*!
+However, the original connector of the servo comes in the following arrangement: VCC, Control Signal and GND. *Damn it*!
 
 We will have to connect it to the protoboard and do the wiring there, just for one pin! Unless... We change the conector to our needs. Here's a picture of a similar connector:
 
