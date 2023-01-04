@@ -92,7 +92,9 @@ Then we perfom a linear escale to reduce the value given (Which can go from `-10
 
 This is perfomed on the `for` loop, the real trick comes in how we tell `Python` to end the printed string, with the parameter `end=`. We can set it to be nothing at all, maybe a carriage return... That carriage return is key, since once the whole gauge is printed we will return the cursor to the start of the line, ready to overwrite the next gauge on the next call. **Since the char width will remain constant**, this will give us the illusion of a moving slider. Cool!
 
-
+<p align="center">
+  <img src="./doc/img/slider_demo.gif" />
+</p>
 
 ## External code
 
@@ -100,10 +102,27 @@ We are using [PIGPIO](https://abyz.me.uk/rpi/pigpio/) which according to their a
 
 > is a library for the Raspberry which allows control of the General Purpose Input Outputs (GPIO).  pigpio works on all versions of the Pi.
 
+In this case we are using it to control the PWM signals in an easy way. For example, it allows us to write a PWM signal by its desired Pulse Width according to certain parameters, very handy.
+
+Some other code used in this exercise, like de [PWM reader](./src/read_PWM.py), is exactly an [example found on the PIGPIO documentation](https://abyz.me.uk/rpi/pigpio/examples.html). So there is no point to explain them here since they have their own documentation as said!
+
+However one important thing to note is what does actually this line do:
+
+```bash
+sudo pigpiod
+```
+According to the documentation...
+
+> The pigpio library is written in the C programming language. The pigpio daemon offers a socket and pipe interface to the underlying C library. A C library and a Python module allow control of the GPIO via the pigpio daemon.
+
+Wow! So that's why nothing works if you do not launch the daemon first! Interesting...
+
 ## Circuit testing
 
 This is the result! Pretty nice, isn't it?
 
-![Circuit Demo](./doc/img/demo.gif)
+### You can actually click on the preview to view a video of the circuit!
+
+[![Circuit Demo](https://img.youtube.com/vi/aeIq6lUed1c/0.jpg)](https://www.youtube.com/watch?v=aeIq6lUed1c "P9 - Servo Demo")
 
 [^1]: The class itself is currently under development so it lacks of a few features, like value validation, but deadline approaches!
