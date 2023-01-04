@@ -60,7 +60,7 @@ Along with the class other methods are included, like run or stop the servo, set
 
 In the other hand, we have the second exercise, which encourage us to drive the servo by writting the desired value by keyboard. Actually what we did its some kind of "slider", in which you can gradually increase or decrease the speed by hitting <kbd>A</kbd> or <kbd>D</kbd> on the keyboard, also keeping the functionality of <kbd>Ctrl</kbd> + <kbd>C</kbd> to exit the program!
 
-Both programs are documented well enough despite of the "slider" draw, so let's talk about it!
+Both programs are documented well enough (And comment them here will take forever) except of the "slider" draw, so let's talk about it!
 
 ## Code
 
@@ -85,6 +85,20 @@ def draw_gauge(value):
 
     print(end_str, end="\r")
 ```
+
+First of all, this "slider" will have a start and an end, both taking char width, so we have to take in consideration. Next we determine the maximum width of the whole slider (**In chars!**). Substracting the length of the start and end strings to the maximum char count gives us the chars left *we have to paint*.
+
+Then we perfom a linear escale to reduce the value given (Which can go from `-100` to `100`) from `0` to the chars we have left, calculated earlier. This will give us the position where the indicator should be printed. The rest of characters should be filled with spaces and we are done!
+
+This is perfomed on the `for` loop, the real trick comes in how we tell `Python` to end the printed string, with the parameter `end=`. We can set it to be nothing at all, maybe a carriage return... That carriage return is key, since once the whole gauge is printed we will return the cursor to the start of the line, ready to overwrite the next gauge on the next call. **Since the char width will remain constant**, this will give us the illusion of a moving slider. Cool!
+
+
+
+## External code
+
+We are using [PIGPIO](https://abyz.me.uk/rpi/pigpio/) which according to their authors...
+
+> is a library for the Raspberry which allows control of the General Purpose Input Outputs (GPIO).  pigpio works on all versions of the Pi.
 
 ## Circuit testing
 
