@@ -13,7 +13,6 @@
 
 import signal
 import sys, tty, termios
-import time
 import parallax
 
 ###############################################################################
