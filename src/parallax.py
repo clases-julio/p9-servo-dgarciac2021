@@ -12,7 +12,6 @@
 # Neccesary modules
 
 from enum import Enum
-import itertools
 import time, pigpio, read_PWM
 import math
 from numpy import interp
